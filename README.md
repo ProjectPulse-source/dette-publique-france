@@ -1,10 +1,10 @@
 # 📊 Dette Publique France - Visualisation en Temps Réel
 
-Site web interactif affichant l'évolution de la dette publique française basé sur les données officielles de l'**INSEE**.
+Site web interactif affichant l'évolution de la dette publique française basé sur les données officielles de l'**INSEE**, avec présentation de deux livres sur l'économie et la dette.
 
 ## 🌐 Démo en Ligne
 
-👉 [Voir le site en direct](https://votre-username.github.io/dette-publique-france/)
+👉 [Voir le site en direct](https://projectpulse-source.github.io/dette-publique-france/)
 
 ## ✨ Fonctionnalités
 
@@ -12,21 +12,30 @@ Site web interactif affichant l'évolution de la dette publique française basé
 - 💰 **Statistiques en temps réel** : dette en % du PIB, montant total, dette par habitant, intérêts, solde primaire
 - 🥧 **Camembert détenteurs** : Qui détient la dette publique ?
 - 📊 **Graphique du solde primaire** : Évolution sur 5 ans
-- 📖 **Section livre** avec préface complète
+- 📖 **Deux sections livres** avec préfaces complètes :
+  - Dette Souveraine - Qui paie vraiment
+  - ANTHROPIE - Ordre ici. Dette ailleurs
+- 📱 **Partage social intégré** : Twitter, Facebook, LinkedIn
 - 💡 **Tooltips explicatifs** sur le solde primaire
 - 📱 **Design responsive** compatible mobile/tablette/desktop
 - 🔄 **Mise à jour automatique** des données via l'API INSEE
 - 🎨 **Interface moderne** et minimaliste
 
-## 🖼️ Configuration de l'image de couverture
+## 🖼️ Configuration des images de couverture
 
-Pour afficher la couverture du livre "Dette Souveraine - Qui paie vraiment" :
+Pour afficher les couvertures des livres :
 
-1. **Nommez votre image** : `image_couverture.jpg` (ou `.png`)
-2. **Placez-la à la racine** du projet (même dossier que `index.html`)
-3. **Dimensions recommandées** : 220x320 pixels minimum
+### Livre 1 : Dette Souveraine
+- **Nom du fichier** : `image_couverture.PNG` (ou `.jpg`)
+- **Emplacement** : À la racine du projet
 
-Si l'image n'est pas trouvée, un placeholder stylisé s'affichera automatiquement.
+### Livre 2 : ANTHROPIE  
+- **Nom du fichier** : `image_anthropie.jpg` (ou `.png`)
+- **Emplacement** : À la racine du projet
+
+**Dimensions recommandées** : 150x220 pixels minimum
+
+Si les images ne sont pas trouvées, un placeholder stylisé s'affichera automatiquement.
 
 ## 🚀 Installation et Utilisation
 
@@ -34,7 +43,7 @@ Si l'image n'est pas trouvée, un placeholder stylisé s'affichera automatiqueme
 
 1. **Forker ce repository** ou cloner le code
    ```bash
-   git clone https://github.com/votre-username/dette-publique-france.git
+   git clone https://github.com/ProjectPulse-source/dette-publique-france.git
    cd dette-publique-france
    ```
 
@@ -47,14 +56,14 @@ Si l'image n'est pas trouvée, un placeholder stylisé s'affichera automatiqueme
 
 3. **Votre site sera accessible à :**
    ```
-   https://votre-username.github.io/dette-publique-france/
+   https://[votre-username].github.io/dette-publique-france/
    ```
 
 ### Option 2 : Utilisation en Local
 
 1. **Cloner le repository**
    ```bash
-   git clone https://github.com/votre-username/dette-publique-france.git
+   git clone https://github.com/ProjectPulse-source/dette-publique-france.git
    cd dette-publique-france
    ```
 
@@ -87,6 +96,8 @@ dette-publique-france/
 ├── data/
 │   └── dette_data.json    # Données de la dette (généré automatiquement)
 ├── requirements.txt       # Dépendances Python
+├── image_couverture.PNG  # Couverture du livre Dette Souveraine (optionnel)
+├── image_anthropie.jpg   # Couverture du livre ANTHROPIE (optionnel)
 └── README.md             # Documentation
 ```
 
@@ -150,6 +161,32 @@ jobs:
 - **Séries temporelles** :
   - Dette en % du PIB : Série trimestrielle depuis 1995
   - Dette en milliards d'euros : Série trimestrielle depuis 1995
+  - Solde primaire : Données annuelles
+
+## 📚 Livres Présentés
+
+### Dette Souveraine - Qui paie vraiment
+Analyse documentée des mécanismes de la dette publique française, avec données actualisées 2024-2025, sources officielles (INSEE, OCDE, Banque de France), et explications sans jargon.
+
+### ANTHROPIE - Ordre ici. Dette ailleurs
+Histoire de l'humanité vue sous l'angle des équilibres et transferts de dette, de Rome à nos jours, analysant comment chaque îlot d'ordre créé exporte son désordre ailleurs.
+
+## 🔄 Configuration des Liens
+
+### Liens Amazon
+Dans le fichier `index.html`, mettez à jour les liens Amazon :
+```javascript
+document.getElementById('amazon-link-1').href = 'VOTRE_LIEN_AMAZON_LIVRE_1';
+document.getElementById('amazon-link-2').href = 'VOTRE_LIEN_AMAZON_LIVRE_2';
+```
+
+### Partage Social
+Les boutons de partage sont pré-configurés pour :
+- Twitter/X
+- Facebook  
+- LinkedIn
+
+Ils s'ouvrent automatiquement dans un nouvel onglet avec le lien du site et le titre du livre.
 
 ## 🎨 Personnalisation
 
