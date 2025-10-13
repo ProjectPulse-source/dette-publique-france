@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dette Publique Française - Visualisation</title>
+    <meta name="description" content="Visualisation en temps réel de la dette publique française basée sur les données officielles de l'INSEE">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: #f5f5f5;
+            color: #2d2d2d;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 200;
+            color: #1a1a1a;
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            color: #8a8a8a;
+            font-size: 0.95rem;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .metric-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 35px 30px;
+            box-shadow: 
+                0 10px 30px rgba(0, 0, 0, 0.04),
+                0 2px 8px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.06),
+                0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .metric-value {
+            font-size: 2.8rem;
+            font-weight: 200;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+            line-height: 1;
+        }
+
+        .metric-label {
+            color: #8a8a8a;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .metric-trend {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            background: #f8f8f8;
+            color: #5a5a5a;
+        }
+
+        .trend-icon {
+            font-size: 1rem;
+        }
+
+        .divider {
+            width: 100%;
+            height: 1px;
+            background: #e5e5e5;
+            margin: 50px 0;
+        }
+
+        .content-section {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 50px;
+            margin-bottom: 40px;
+            box-shadow: 
+                0 10px 30px rgba(0, 0, 0, 0.04),
+                0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+
+        .chart-title {
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: #2d2d2d;
+            margin-bottom: 30px;
+            text-align: center;
+            letter-spacing: -0.3px;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 400px;
+            margin-bottom: 30px;
+        }
+
+        .share-section {
+            text-align: center;
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 
+                0 10px 30px rgba(0, 0, 0, 0.04),
+                0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+
+        .share-title {
+            font-size: 1.3rem;
+            font-weight: 300;
+            color: #2d2d2d;
+            margin-bottom: 20px;
+            letter-spacing: -0.3px;
+        }
+
+        .share-subtitle {
+            color: #8a8a8a;
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+        }
+
+        .share-grid {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .share-button {
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: #f8f8f8;
+            color: #6a6a6a;
+            border: 1px solid #f0f0f0;
+        }
+
+        .share-button:hover {
+            transform: translateY(-3px);
+            background: #ffffff;
+            box-shadow: 
+                0 8px 20px rgba(0, 0, 0, 0.08),
+                0 4px 8px rgba(0, 0, 0, 0.06);
+            color: #2d2d2d;
+        }
+
+        .share-button svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .footer-info {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid #f0f0f0;
+            font-size: 0.85rem;
+            color: #8a8a8a;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 100px 20px;
+            color: #8a8a8a;
+            font-size: 1.1rem;
+            font-weight: 300;
+        }
+
+        /* Nouveaux styles pour les indicateurs avancés */
+        .chart-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .chart-half {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 
+                0 10px 30px rgba(0, 0, 0, 0.04),
+                0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+
+        .chart-half-title {
+            font-size: 1.3rem;
+            font-weight: 300;
+            color: #2d2d2d;
+            margin-bottom: 25px;
+            text-align: center;
+            letter-spacing: -0.3px;
+        }
+
+        .chart-half-subtitle {
+            font-size: 0.85rem;
+            color: #8a8a8a;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .chart-compact {
+            position: relative;
+            height: 300px;
+        }
+
+        .sparkline {
+            height: 50px;
+            margin-top: 15px;
+        }
+
+        .metric-detail {
+            font-size: 1.2rem;
+            color: #5a5a5a;
+            margin-top: 8px;
+            font-weight: 300;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-top: 12px;
+        }
+
+        .badge-info {
+            background: #f0f0f0;
+            color: #6a6a6a;
+        }
+
+        .badge-warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .badge-success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .book-showcase {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .book-cover {
+            width: 220px;
+            height: 320px;
+            background: #f8f8f8;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8a8a8a;
+            font-size: 0.9rem;
+            text-align: center;
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.08),
+                0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #f0f0f0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .book-cover::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #e0e0e0, transparent);
+        }
+
+        .book-info h2 {
+            font-size: 1.8rem;
+            font-weight: 300;
+            margin-bottom: 12px;
+            color: #1a1a1a;
+            letter-spacing: -0.5px;
+        }
+
+        .book-author {
+            font-size: 1rem;
+            color: #6a6a6a;
+            margin-bottom: 25px;
+            font-weight: 400;
+        }
+
+        .book-description {
+            color: #5a5a5a;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            font-weight: 300;
+        }
+
+        .book-features {
+            display: flex;
+            gap: 35px;
+            margin-bottom: 35px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #7a7a7a;
+            font-size: 0.9rem;
+        }
+
+        .feature-icon {
+            width: 20px;
+            height: 20px;
+            background: #f0f0f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8a8a8a;
+            font-size: 10px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 0.95rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: 0.3px;
+        }
+
+        .btn-primary {
+            background: #2d2d2d;
+            color: white;
+            box-shadow: 
+                0 4px 14px rgba(0, 0, 0, 0.15),
+                0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary:hover {
+            background: #1a1a1a;
+            transform: translateY(-2px);
+            box-shadow: 
+                0 8px 20px rgba(0, 0, 0, 0.2),
+                0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-secondary {
+            background: #ffffff;
+            color: #4a4a4a;
+            border: 1px solid #e5e5e5;
+        }
+
+        .btn-secondary:hover {
+            background: #f8f8f8;
+            border-color: #d0d0d0;
+        }
+
+        /* Modal pour la préface */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background-color: #ffffff;
+            margin: 3% auto;
+            padding: 0;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 900px;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            padding: 40px 50px 30px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .modal-header h2 {
+            font-size: 2rem;
+            font-weight: 300;
+            color: #1a1a1a;
+            margin-bottom: 10px;
+        }
+
+        .modal-body {
+            padding: 40px 50px;
+            line-height: 1.8;
+            color: #4a4a4a;
+        }
+
+        .modal-body h3 {
+            font-size: 1.3rem;
+            font-weight: 400;
+            color: #2d2d2d;
+            margin: 30px 0 15px;
+        }
+
+        .modal-body p {
+            margin-bottom: 15px;
+        }
+
+        .modal-body strong {
+            color: #2d2d2d;
+        }
+
+        .modal-sources {
+            padding: 30px 50px 40px;
+            background: #f8f8f8;
+            border-radius: 0 0 20px 20px;
+            font-size: 0.8rem;
+            color: #6a6a6a;
+            line-height: 1.6;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 2rem;
+            font-weight: 200;
+            color: #8a8a8a;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover {
+            color: #2d2d2d;
+        }
+
+        /* Tooltip pour explication */
+        .tooltip-container {
+            position: relative;
+            display: inline-block;
+            cursor: help;
+        }
+
+        .tooltip-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #f0f0f0;
+            color: #8a8a8a;
+            font-size: 12px;
+            margin-left: 8px;
+            font-weight: 500;
+        }
+
+        .tooltip-text {
+            visibility: hidden;
+            position: absolute;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.9);
+            color: #fff;
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            width: 320px;
+            z-index: 100;
+            font-weight: 300;
+            text-align: left;
+        }
+
+        .tooltip-text::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: rgba(0, 0, 0, 0.9) transparent transparent transparent;
+        }
+
+        .tooltip-container:hover .tooltip-text {
+            visibility: visible;
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .metric-card {
+            animation: fadeIn 0.6s ease backwards;
+        }
+
+        .metric-card:nth-child(1) { animation-delay: 0.1s; }
+        .metric-card:nth-child(2) { animation-delay: 0.2s; }
+        .metric-card:nth-child(3) { animation-delay: 0.3s; }
+        .metric-card:nth-child(4) { animation-delay: 0.4s; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 15px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .metrics-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .content-section {
+                padding: 30px 25px;
+            }
+
+            .chart-wrapper {
+                height: 300px;
+            }
+
+            .metric-value {
+                font-size: 2.2rem;
+            }
+
+            .chart-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .chart-half {
+                padding: 30px 20px;
+            }
+
+            .book-showcase {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 30px;
+            }
+
+            .book-cover {
+                margin: 0 auto;
+                width: 180px;
+                height: 260px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .book-features {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 5% auto;
+            }
+
+            .modal-header, .modal-body, .modal-sources {
+                padding: 25px 20px;
+            }
+
+            .tooltip-text {
+                width: 260px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Dette Publique Française</h1>
+            <p class="subtitle" id="current-date">TABLEAU DE BORD — OCTOBRE 2025</p>
+        </header>
+
+        <div id="loading" class="loading">
+            Chargement des données INSEE...
+        </div>
+
+        <div id="content" style="display: none;">
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-value" id="current-montant">--</div>
+                    <div class="metric-label">Milliards d'euros</div>
+                    <span class="metric-trend" id="trend-montant">
+                        <span class="trend-icon">↑</span> <span id="trend-montant-text">--</span>
+                    </span>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-value" id="current-pib">--</div>
+                    <div class="metric-label">Ratio Dette/PIB</div>
+                    <span class="metric-trend" id="trend-pib">
+                        <span class="trend-icon">↑</span> <span id="trend-pib-text">--</span>
+                    </span>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-value" id="per-capita">--</div>
+                    <div class="metric-label">Dette par habitant</div>
+                    <span class="metric-trend" id="trend-capita">
+                        <span class="trend-icon">↑</span> <span id="trend-capita-text">--</span>
+                    </span>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-value" id="interets-annuel">--</div>
+                    <div class="metric-label">Mds€ d'intérêts/an</div>
+                    <span class="metric-trend">
+                        <span class="trend-icon">•</span> <span>~2% du montant</span>
+                    </span>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-value" id="solde-primaire">--</div>
+                    <div class="metric-label">
+                        Solde primaire
+                        <span class="tooltip-container">
+                            <span class="tooltip-icon">?</span>
+                            <span class="tooltip-text">
+                                <strong>Le solde primaire</strong> correspond à la différence entre les recettes publiques (impôts, cotisations) et les dépenses publiques, <strong>hors paiement des intérêts</strong> de la dette.<br><br>
+                                ✓ Positif = l'État gère bien ses finances courantes<br>
+                                ✗ Négatif = l'État vit au-dessus de ses moyens
+                            </span>
+                        </span>
+                    </div>
+                    <div class="metric-detail" id="solde-primaire-mds">-- Md€ (12 derniers mois)</div>
+                    <span class="badge badge-info" id="badge-solde">
+                        Objectif ≥ 0%
+                    </span>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="chart-grid">
+                <div class="chart-half">
+                    <h3 class="chart-half-title">Qui détient la dette ?</h3>
+                    <p class="chart-half-subtitle">Répartition par détenteur • <span id="badge-detenteurs">T2 2025</span></p>
+                    <div class="chart-compact">
+                        <canvas id="chartDetenteurs"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-half">
+                    <h3 class="chart-half-title">Solde primaire</h3>
+                    <p class="chart-half-subtitle">Évolution sur 5 ans (hors intérêts)</p>
+                    <div class="chart-compact">
+                        <canvas id="chartSoldePrimaire"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2 class="chart-title">Évolution de la dette en % du PIB</h2>
+                <div class="chart-wrapper">
+                    <canvas id="chartPIB"></canvas>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2 class="chart-title">Évolution de la dette en milliards d'euros</h2>
+                <div class="chart-wrapper">
+                    <canvas id="chartMontant"></canvas>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="content-section">
+                <div class="book-showcase">
+                    <div class="book-cover">
+                        <img src="image_couverture.jpg" alt="Dette Souveraine - Qui paie vraiment" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'padding: 20px; line-height: 1.6;\'><div style=\'font-size: 1.1rem; font-weight: 500; margin-bottom: 10px;\'>DETTE<br>SOUVERAINE</div><div style=\'font-size: 0.8rem; color: #aaa; margin-bottom: 20px;\'>—</div><div style=\'font-size: 0.75rem; color: #aaa;\'>Qui paie<br>vraiment</div></div>';">
+                    </div>
+                    <div class="book-info">
+                        <h2>Dette Souveraine — Qui paie vraiment</h2>
+                        <p class="book-author">Analyse documentée des mécanismes de la dette publique</p>
+                        <p class="book-description">
+                            Des centaines de millions d'euros d'intérêts de la dette chaque jour. Des dizaines de milliers de lits d'hôpital fermés en quelques années. Écoles surchargées, justice à bout. <strong>Qui paie vraiment la dette publique — et surtout, qui décide où l'addition retombe ?</strong>
+                        </p>
+                        <p class="book-description">
+                            Ce livre rend visibles les mécanismes de finances publiques qui organisent des transferts silencieux : créanciers, intérêts de la dette, austérité, agences de notation, écarts de taux (spreads) qui « votent » avant les citoyens, rôle de la BCE (Banque centrale européenne). Récits incarnés au travers de personnages concrets, explications pas à pas, sans jargon, appuyés sur plusieurs centaines de sources (INSEE, OCDE, Banque de France).
+                        </p>
+                        <div class="book-features">
+                            <div class="feature">
+                                <div class="feature-icon">•</div>
+                                <span>Données 2024-2025</span>
+                            </div>
+                            <div class="feature">
+                                <div class="feature-icon">•</div>
+                                <span>Sources officielles</span>
+                            </div>
+                            <div class="feature">
+                                <div class="feature-icon">•</div>
+                                <span>Sans jargon</span>
+                            </div>
+                        </div>
+                        <div class="action-buttons">
+                            <a href="#" class="btn btn-primary">
+                                Commander le livre
+                            </a>
+                            <a href="#" class="btn btn-secondary" id="btn-preface">
+                                Lire un extrait
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="share-section">
+                <h3 class="share-title">Partager ces informations</h3>
+                <p class="share-subtitle">Données officielles INSEE • Mise à jour trimestrielle</p>
+                <div class="share-grid">
+                    <a href="https://twitter.com/intent/tweet?text=Dette%20Publique%20Française&url=" class="share-button" title="X (Twitter)">
+                        <svg fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                        </svg>
+                    </a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=" class="share-button" title="Facebook">
+                        <svg fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                        </svg>
+                    </a>
+                    <a href="https://www.linkedin.com/sharing/share-offsite/?url=" class="share-button" title="LinkedIn">
+                        <svg fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                    </a>
+                    <a href="https://api.whatsapp.com/send?text=" class="share-button" title="WhatsApp">
+                        <svg fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.149-.67.149-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+                            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0m5.894 16.606c-.252.633-.815 1.165-1.456 1.353-1.034.252-2.232.252-3.832-.252-3.832-1.213-6.313-4.464-6.503-4.67-.19-.206-1.543-2.055-1.543-3.92 0-1.865.967-2.785 1.31-3.165.343-.38.748-.475 1-.475h.723c.23 0 .538-.089.837.638.302.73 1.029 2.51 1.119 2.694.09.184.15.4.03.64-.118.24-.177.39-.354.6-.177.21-.373.468-.532.629-.16.16-.326.335-.14.635.187.3.83 1.37 1.78 2.22 1.223 1.095 2.253 1.434 2.572 1.594.32.16.506.135.693-.08.187-.215.8-.934.1015-1.254.215-.32.43-.267.723-.16s1.883.89 2.204 1.05c.32.16.533.24.613.37.08.13.08.74-.173 1.456z"/>
+                        </svg>
+                    </a>
+                    <a href="mailto:?subject=Dette%20Publique%20Française&body=" class="share-button" title="Email">
+                        <svg fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                        </svg>
+                    </a>
+                </div>
+                <div class="footer-info">
+                    <strong>Source:</strong> Institut National de la Statistique et des Études Économiques (INSEE)<br>
+                    <span id="update-time">Dernière mise à jour: --</span><br>
+                    <a href="https://github.com/votre-username/dette-publique-france" style="color: #6a6a6a; text-decoration: none;">Voir le code source sur GitHub</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Préface -->
+    <div id="modal-preface" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" id="close-modal">&times;</span>
+            <div class="modal-header">
+                <h2>Préface</h2>
+                <p style="color: #8a8a8a; font-size: 0.9rem;">Dette Souveraine — Qui paie vraiment</p>
+            </div>
+            <div class="modal-body">
+                <p>3h du matin, urgences d'un CHU de province. Néons blafards, pleurs étouffés, sonneries incessantes.</p>
+                
+                <p>Un enfant brûlant de fièvre dans les bras de sa mère. Quatre heures d'attente. Brancard 18.</p>
+                
+                <p>Marie — appelons-la ainsi — traverse le couloir en courant. Une infirmière pour tout le service, combien de patients ? Elle a arrêté de compter après vingt. Plus loin, un interne qui tient debout par habitude.</p>
+                
+                <p>Pas un dysfonctionnement. Le fonctionnement.</p>
+                
+                <p>Quinze ans qu'elle est là. Depuis 2013, douze lits envolés. Moins de collègues, plus de brancards, des nuits au bord de la rupture. Marie n'a ni l'air ni le temps de disséquer une loi de finances. Elle encaisse les résultats.</p>
+                
+                <p>Et elle n'est pas seule.</p>
+                
+                <p>2013–2023 : dizaines de milliers de lits fermés. Pendant ce temps : population vieillissante, maladies chroniques en hausse, burn-outs en série. Consultations psy saturées, arrêts maladie allongés, épuisement normalisé.</p>
+                
+                <p>Les besoins montent. Le système descend.</p>
+                
+                <p><strong>Pourquoi ?</strong></p>
+                
+                <p>Pas de scandale. Pas de complot. Pas d'erreur de gestion.</p>
+                
+                <p>Un arbitrage.</p>
+                
+                <p><strong>66 milliards d'euros par an.</strong></p>
+                
+                <p>Les intérêts de la dette publique en 2025. Pas le capital — un État ne rembourse jamais, il refinance en continu. Il paie l'intérêt. Indéfiniment.</p>
+                
+                <p>66 milliards : davantage que la Justice, la Police et l'Enseignement supérieur réunis. Soit environ 1 600 euros par an et par foyer fiscal — deux mois de courses alimentaires pour une famille moyenne, ou l'équivalent d'une trentaine de consultations spécialisées introuvables à l'hôpital en moins de quatre mois.</p>
+                
+                <p>Cet argent ne bâtit rien. Il rémunère le passé. Ne soigne personne, n'éduque aucun enfant, ne répare aucune route. Il paie les créanciers : fonds de pension, banques, assureurs.</p>
+                
+                <p><strong>La dette : 3 400 milliards.</strong></p>
+                
+                <p>Marie attend des renforts. Vos impôts partent ailleurs.</p>
+                
+                <h3>Le Constat</h3>
+                
+                <p>Pendant des décennies, une promesse simple a tenu : demain irait mieux qu'aujourd'hui. Nos parents vivaient mieux que nos grands-parents. Nous devions vivre mieux qu'eux. Nos enfants mieux encore.</p>
+                
+                <p>Cette promesse est morte.</p>
+                
+                <p>Marie gagne davantage aujourd'hui qu'en 2015. Pourtant, elle vit moins bien. Son loyer a augmenté plus vite que son salaire. Ses courses aussi. Sa mutuelle également. Le pouvoir d'achat recule malgré l'augmentation nominale. Et avec lui, le sommeil. Les calculs constants. L'angoisse du découvert. Ce n'est pas qu'une question d'argent : c'est une usure mentale permanente.</p>
+                
+                <p>Sa fille Léa a 8 ans. À sa naissance en 2017, la dette publique était de 2 218 milliards d'euros. En huit ans, 1 198 milliards se sont ajoutés - répartis mécaniquement sur chaque nouveau-né — le temps d'apprendre à lire.</p>
+                
+                <p>Cette dette n'est pas abstraite. Elle produira des effets concrets toute sa vie : soit des impôts plus lourds pour la rembourser, soit des services publics plus dégradés si on ne la rembourse pas, soit les deux. Léa paiera — en argent ou en renoncements — pour des décisions prises avant sa naissance, par des gouvernements qu'elle n'a pas élus, au bénéfice de créanciers qu'elle ne rencontrera jamais.</p>
+                
+                <p>Ce ne sont pas des accidents. Ce sont des symptômes.</p>
+                
+                <p><strong>2026 marque un basculement</strong> : pour la première fois dans l'histoire républicaine, les intérêts de la dette pourraient, selon la Cour des comptes, devenir le premier poste budgétaire de l'État. Devant l'école de vos enfants. Devant la police. Devant tout le reste.</p>
+                
+                <p>Ce livre paraît maintenant parce qu'après, il sera peut-être trop tard.</p>
+                
+                <p>Lorsqu'un système trahit sa promesse d'amélioration collective, comprendre pourquoi devient un devoir citoyen. Démonter la machine pour voir comment elle fonctionne réellement. Et surtout : dans l'intérêt de qui.</p>
+                
+                <h3>L'Enquête</h3>
+                
+                <p>Ce livre part d'une question simple : <strong>qui paie vraiment ?</strong> Une question qui en entraîne mécaniquement une autre : qui décide vraiment ?</p>
+                
+                <p>En remontant les flux financiers et les circuits du pouvoir, il révèle une mécanique invisible : la dette publique n'est pas un problème technique à gérer, mais un instrument qui organise des transferts systématiques. Du futur vers le présent. Des services publics vers les rentiers. De la démocratie vers les marchés.</p>
+                
+                <p>Pour analyser ces transferts, ce livre mobilise un concept nouveau, emprunté à la physique et appliqué au social : <strong>l'anthropie</strong>. Les systèmes n'éliminent pas le désordre, ils le déplacent. Cette grille transforme la question technique (« Comment réduire le déficit ? ») en question politique : qui paie, pourquoi, et au nom de quelle justice ?</p>
+                
+                <p>Cet ouvrage ne vous dira pas quoi penser. Il vous donnera les outils pour décider vous-même ce qui doit changer, et comment.</p>
+                
+                <p>Si vous travaillez plus pour vivre moins bien ; si vous voyez les services publics se dégrader ; si vous payez mais ne décidez plus — alors ces pages vous montreront que votre situation n'est pas un échec personnel, mais l'aboutissement logique d'arbitrages politiques précis.</p>
+                
+                <p>Si vous avez pris votre retraite — si vous avez connu l'ascension sociale de vos parents, la promesse tenue pour votre génération, et que vous voyez vos enfants déclasser, vos petits-enfants s'endetter avant même de travailler — ce livre vous expliquera comment la machine s'est inversée. Pourquoi ce qui a fonctionné pour vous ne fonctionne plus pour eux.</p>
+                
+                <p>Si vous vous sentez « protégé » — patrimoine stable, enfants scolarisés dans le privé — ce livre vous montrera l'envers du décor : une sécurité posée sur des fondations qui se fissurent. Aucun ordre ne dure quand il se nourrit du désordre des autres.</p>
+                
+                <p>Observez la classe politique — toutes tendances confondues. Même stupeur, même masque de consternation : l'aveu tacite que les vieux leviers ne mordent plus sur le réel. Les catégories se disloquent, les étiquettes se décollent. La machine qu'ils prétendent piloter leur échappe.</p>
+                
+                <p>Si vous êtes sceptique — « encore un livre à thèse » — lisez au moins les cent premières pages. Vulgarisation sans concession à la rigueur. Données vérifiables, sources citées, mécanismes démontés pas à pas.</p>
+                
+                <p>Et si vous tenez que cet ordre est juste et nécessaire, ce livre ne vous flattera pas : il vous confrontera.</p>
+                
+                <p>Marie ne sait pas encore que ce qui lui arrive n'est pas accidentel.</p>
+                
+                <p><strong>Vous voulez savoir pourquoi ?</strong></p>
+                
+                <p>Elle, elle n'a pas le choix.</p>
+            </div>
+            <div class="modal-sources">
+                <strong>Sources :</strong> 43 500 lits fermés 2013-2023 : DREES ER1315 / ≈60–66 Mds intérêts 2025 (APU) ; ≈55 Mds État : Cour des comptes & PLF 2025 / 3 416 Mds dette T2 2025 : INSEE / ≈1 600 €/foyer (66 Mds/41,0 M) : DGFiP / 2 218 Mds dette 2017 : INSEE / +1 198 Mds 2017→T2 2025 : INSEE calcul / 165 Mds COVID (surcroît de dette) : Budget.gouv.fr / Attente urgences 2023 : médiane >3 h : DREES / Ratios infirmière/patients recommandés 6–8 ; dépassements fréquents : SNPI & Sénat / Délais spécialistes 2024 : médiane ≈25–45 j (ophtalmo, dermato…) : SNOF-CSA & Doctolib / Tarifs consultation : 30 € MG ; 31,50 € spécialités secteur 1 : Ameli / Salaire infirmière (exemple) 3 400 € : Emploi-Collectivités grilles FPH / 237 200 médecins actifs 2025 : DREES / Premier poste 2026 (charge intérêts) : Cour des comptes projection / Léa chronologie : arithmétique 2017–2025
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script>
+        // Données INSEE intégrées (pour fonctionnement standalone)
+        const DATA_INSEE = {
+            "last_update": "2025-10-13T10:00:00",
+            "data": [
+                {"period": "2020-Q1", "dette_pib": 101.2, "dette_montant": 2438.0},
+                {"period": "2020-Q2", "dette_pib": 115.1, "dette_montant": 2674.3},
+                {"period": "2020-Q3", "dette_pib": 115.9, "dette_montant": 2714.7},
+                {"period": "2020-Q4", "dette_pib": 115.0, "dette_montant": 2650.1},
+                {"period": "2021-Q1", "dette_pib": 116.3, "dette_montant": 2739.9},
+                {"period": "2021-Q2", "dette_pib": 114.4, "dette_montant": 2788.7},
+                {"period": "2021-Q3", "dette_pib": 113.8, "dette_montant": 2813.9},
+                {"period": "2021-Q4", "dette_pib": 112.9, "dette_montant": 2813.4},
+                {"period": "2022-Q1", "dette_pib": 114.4, "dette_montant": 2901.8},
+                {"period": "2022-Q2", "dette_pib": 113.6, "dette_montant": 2926.8},
+                {"period": "2022-Q3", "dette_pib": 113.2, "dette_montant": 2960.7},
+                {"period": "2022-Q4", "dette_pib": 111.4, "dette_montant": 2955.6},
+                {"period": "2023-Q1", "dette_pib": 112.1, "dette_montant": 3020.8},
+                {"period": "2023-Q2", "dette_pib": 111.3, "dette_montant": 3055.7},
+                {"period": "2023-Q3", "dette_pib": 111.0, "dette_montant": 3095.6},
+                {"period": "2023-Q4", "dette_pib": 109.8, "dette_montant": 3102.5},
+                {"period": "2024-Q1", "dette_pib": 110.4, "dette_montant": 3160.8},
+                {"period": "2024-Q2", "dette_pib": 112.1, "dette_montant": 3229.7},
+                {"period": "2024-Q3", "dette_pib": 113.6, "dette_montant": 3301.4},
+                {"period": "2024-Q4", "dette_pib": 113.2, "dette_montant": 3305.3},
+                {"period": "2025-Q1", "dette_pib": 113.9, "dette_montant": 3345.4},
+                {"period": "2025-Q2", "dette_pib": 115.6, "dette_montant": 3416.3}
+            ]
+        };
+
+        // Données de répartition de la dette (T2 2025, source AFT/Banque de France)
+        const REPARTITION_DETTE = {
+            labels: ['Non-résidents', 'Eurosystème (APP/PEPP)', 'Assureurs FR', 'Banques FR', 'Autres résidents'],
+            data: [52.3, 18.7, 12.4, 8.6, 8.0], // en %
+            colors: ['#2d2d2d', '#5a5a5a', '#8a8a8a', '#b0b0b0', '#d0d0d0']
+        };
+
+        // Données du solde primaire (% du PIB, estimations)
+        const SOLDE_PRIMAIRE = {
+            periods: ['2020', '2021', '2022', '2023', '2024'],
+            data: [-6.8, -4.2, -3.1, -3.7, -3.9] // en % du PIB
+        };
+        
+        // Configuration des graphiques
+        const chartConfig = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    padding: 12,
+                    borderRadius: 8,
+                    titleFont: {
+                        size: 13,
+                        weight: '400'
+                    },
+                    bodyFont: {
+                        size: 14,
+                        weight: '500'
+                    }
+                }
+            }
+        };
+        
+        // Fonction pour charger et afficher les données
+        async function loadData() {
+            try {
+                // Essayer de charger depuis le fichier externe
+                let data;
+                try {
+                    const response = await fetch('data/dette_data.json');
+                    if (response.ok) {
+                        data = await response.json();
+                    } else {
+                        throw new Error('Fichier non trouvé');
+                    }
+                } catch (fetchError) {
+                    // Si le fichier n'existe pas, utiliser les données intégrées
+                    console.log('Utilisation des données intégrées');
+                    data = DATA_INSEE;
+                }
+                
+                if (!data.data || data.data.length === 0) {
+                    throw new Error('Pas de données disponibles');
+                }
+                
+                // Cacher le loading et afficher le contenu
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('content').style.display = 'block';
+                
+                // Extraire les données
+                const labels = data.data.map(d => formatPeriod(d.period));
+                const dettePIB = data.data.map(d => d.dette_pib);
+                const detteMontant = data.data.map(d => d.dette_montant);
+                
+                // Valeurs actuelles et précédentes
+                const derniere = data.data[data.data.length - 1];
+                const precedente = data.data[data.data.length - 2];
+                const anneeAvant = data.data[data.data.length - 5]; // 4 trimestres avant
+                
+                // Afficher le montant
+                document.getElementById('current-montant').textContent = Math.round(derniere.dette_montant).toLocaleString('fr-FR');
+                
+                // Afficher le ratio Dette/PIB avec %
+                document.getElementById('current-pib').textContent = derniere.dette_pib.toFixed(1) + '%';
+                
+                // Calculer dette par habitant (population France ~67 millions)
+                const perCapita = (derniere.dette_montant * 1000000000) / 67000000;
+                document.getElementById('per-capita').textContent = Math.round(perCapita).toLocaleString('fr-FR') + '€';
+                
+                // Calculer les intérêts annuels (environ 2% du montant)
+                const interetsAnnuel = derniere.dette_montant * 0.02;
+                document.getElementById('interets-annuel').textContent = interetsAnnuel.toFixed(1);
+                
+                // Afficher le solde primaire
+                const soldePrimaire = SOLDE_PRIMAIRE.data[SOLDE_PRIMAIRE.data.length - 1];
+                document.getElementById('solde-primaire').textContent = soldePrimaire.toFixed(1) + '%';
+                const soldePrimaireMds = (soldePrimaire / 100) * (derniere.dette_montant / (derniere.dette_pib / 100));
+                document.getElementById('solde-primaire-mds').textContent = soldePrimaireMds.toFixed(1) + ' Md€ (12 derniers mois)';
+                
+                // Badge du solde primaire
+                const badgeSolde = document.getElementById('badge-solde');
+                if (soldePrimaire >= 0) {
+                    badgeSolde.className = 'badge badge-success';
+                    badgeSolde.textContent = 'Objectif atteint ✓';
+                } else if (soldePrimaire > -2) {
+                    badgeSolde.className = 'badge badge-warning';
+                    badgeSolde.textContent = 'Tendance à surveiller';
+                } else {
+                    badgeSolde.className = 'badge badge-warning';
+                    badgeSolde.textContent = 'En dessous de l\'objectif';
+                }
+                
+                // Calculer les trends
+                const trendMontant = ((derniere.dette_montant - anneeAvant.dette_montant) / anneeAvant.dette_montant * 100).toFixed(1);
+                const trendPIB = (derniere.dette_pib - anneeAvant.dette_pib).toFixed(1);
+                const trendCapita = Math.round((perCapita - (anneeAvant.dette_montant * 1000000000) / 67000000));
+                
+                document.getElementById('trend-montant-text').textContent = `+${trendMontant}% cette année`;
+                document.getElementById('trend-pib-text').textContent = `+${trendPIB} points`;
+                document.getElementById('trend-capita-text').textContent = `+${trendCapita.toLocaleString('fr-FR')}€`;
+                
+                // Date de mise à jour
+                const updateDate = new Date(data.last_update);
+                const periode = derniere.period.replace('-Q', ' T');
+                document.getElementById('current-date').textContent = `TABLEAU DE BORD — ${periode.toUpperCase()}`;
+                document.getElementById('update-time').textContent = 
+                    `Dernière mise à jour: ${updateDate.toLocaleDateString('fr-FR')}`;
+                
+                // Créer le graphique Dette/PIB
+                const ctxPIB = document.getElementById('chartPIB').getContext('2d');
+                new Chart(ctxPIB, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Dette / PIB (%)',
+                            data: dettePIB,
+                            borderColor: '#2d2d2d',
+                            backgroundColor: 'rgba(45, 45, 45, 0.05)',
+                            fill: true,
+                            tension: 0.4,
+                            borderWidth: 2,
+                            pointRadius: 3,
+                            pointBackgroundColor: '#2d2d2d',
+                            pointHoverRadius: 6,
+                            pointHoverBackgroundColor: '#2d2d2d'
+                        }]
+                    },
+                    options: {
+                        ...chartConfig,
+                        scales: {
+                            y: {
+                                beginAtZero: false,
+                                grid: {
+                                    color: '#f0f0f0',
+                                    drawBorder: false
+                                },
+                                ticks: {
+                                    color: '#8a8a8a',
+                                    font: {
+                                        size: 11
+                                    },
+                                    callback: function(value) {
+                                        return value + '%';
+                                    }
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    display: false,
+                                    drawBorder: false
+                                },
+                                ticks: {
+                                    color: '#8a8a8a',
+                                    font: {
+                                        size: 11
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+                
+                // Créer le graphique Montant
+                const ctxMontant = document.getElementById('chartMontant').getContext('2d');
+                new Chart(ctxMontant, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Dette (Md€)',
+                            data: detteMontant,
+                            borderColor: '#5a5a5a',
+                            backgroundColor: 'rgba(90, 90, 90, 0.05)',
+                            fill: true,
+                            tension: 0.4,
+                            borderWidth: 2,
+                            pointRadius: 3,
+                            pointBackgroundColor: '#5a5a5a',
+                            pointHoverRadius: 6,
+                            pointHoverBackgroundColor: '#5a5a5a'
+                        }]
+                    },
+                    options: {
+                        ...chartConfig,
+                        scales: {
+                            y: {
+                                beginAtZero: false,
+                                grid: {
+                                    color: '#f0f0f0',
+                                    drawBorder: false
+                                },
+                                ticks: {
+                                    color: '#8a8a8a',
+                                    font: {
+                                        size: 11
+                                    },
+                                    callback: function(value) {
+                                        return value.toLocaleString('fr-FR') + ' Md€';
+                                    }
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    display: false,
+                                    drawBorder: false
+                                },
+                                ticks: {
+                                    color: '#8a8a8a',
+                                    font: {
+                                        size: 11
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+                
+                // Créer le graphique Camembert - Répartition de la dette
+                const ctxDetenteurs = document.getElementById('chartDetenteurs').getContext('2d');
+                new Chart(ctxDetenteurs, {
+                    type: 'doughnut',
+                    data: {
+                        labels: REPARTITION_DETTE.labels,
+                        datasets: [{
+                            data: REPARTITION_DETTE.data,
+                            backgroundColor: REPARTITION_DETTE.colors,
+                            borderWidth: 0,
+                            hoverOffset: 10
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'bottom',
+                                labels: {
+                                    padding: 15,
+                                    font: {
+                                        size: 11
+                                    },
+                                    color: '#8a8a8a',
+                                    usePointStyle: true,
+                                    pointStyle: 'circle'
+                                }
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                                padding: 12,
+                                borderRadius: 8,
+                                callbacks: {
+                                    label: function(context) {
+                                        return context.label + ': ' + context.parsed + '%';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+                
+                // Créer le graphique du Solde primaire
+                const ctxSoldePrimaire = document.getElementById('chartSoldePrimaire').getContext('2d');
+                new Chart(ctxSoldePrimaire, {
+                    type: 'bar',
+                    data: {
+                        labels: SOLDE_PRIMAIRE.periods,
+                        datasets: [{
+                            label: 'Solde primaire (% PIB)',
+                            data: SOLDE_PRIMAIRE.data,
+                            backgroundColor: SOLDE_PRIMAIRE.data.map(v => v >= 0 ? '#d4edda' : '#f8d7da'),
+                            borderColor: SOLDE_PRIMAIRE.data.map(v => v >= 0 ? '#28a745' : '#dc3545'),
+                            borderWidth: 2,
+                            borderRadius: 6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                                padding: 12,
+                                borderRadius: 8,
+                                callbacks: {
+                                    label: function(context) {
+                                        return 'Solde primaire: ' + context.parsed.y.toFixed(1) + '% du PIB';
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                grid: {
+                                    color: '#f0f0f0',
+                                    drawBorder: false
+                                },
+                                ticks: {
+                                    color: '#8a8a8a',
+                                    font: {
+                                        size: 11
+                                    },
+                                    callback: function(value) {
+                                        return value + '%';
+                                    }
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    display: false,
+                                    drawBorder: false
+                                },
+                                ticks: {
+                                    color: '#8a8a8a',
+                                    font: {
+                                        size: 11
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+                
+            } catch (error) {
+                console.error('Erreur:', error);
+                document.getElementById('loading').innerHTML = 
+                    '<p style="color: #ff6b6b;">Erreur lors du chargement des données.</p>';
+            }
+        }
+        
+        // Formater la période (ex: "2025-Q1" -> "T1 2025")
+        function formatPeriod(period) {
+            if (period.includes('-Q')) {
+                const [year, quarter] = period.split('-Q');
+                return `T${quarter} ${year}`;
+            }
+            return period;
+        }
+        
+        // Charger les données au démarrage
+        loadData();
+
+        // Gestion du modal de préface
+        const modal = document.getElementById('modal-preface');
+        const btnPreface = document.getElementById('btn-preface');
+        const closeModal = document.getElementById('close-modal');
+
+        btnPreface.addEventListener('click', function(e) {
+            e.preventDefault();
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        });
+
+        closeModal.addEventListener('click', function() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+
+        window.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+{
+  "last_update": "2025-10-13T10:00:00",
+  "data": [
+    {"period": "2020-Q1", "dette_pib": 101.2, "dette_montant": 2438.0},
+    {"period": "2020-Q2", "dette_pib": 115.1, "dette_montant": 2674.3},
+    {"period": "2020-Q3", "dette_pib": 115.9, "dette_montant": 2714.7},
+    {"period": "2020-Q4", "dette_pib": 115.0, "dette_montant": 2650.1},
+    {"period": "2021-Q1", "dette_pib": 116.3, "dette_montant": 2739.9},
+    {"period": "2021-Q2", "dette_pib": 114.4, "dette_montant": 2788.7},
+    {"period": "2021-Q3", "dette_pib": 113.8, "dette_montant": 2813.9},
+    {"period": "2021-Q4", "dette_pib": 112.9, "dette_montant": 2813.4},
+    {"period": "2022-Q1", "dette_pib": 114.4, "dette_montant": 2901.8},
+    {"period": "2022-Q2", "dette_pib": 113.6, "dette_montant": 2926.8},
+    {"period": "2022-Q3", "dette_pib": 113.2, "dette_montant": 2960.7},
+    {"period": "2022-Q4", "dette_pib": 111.4, "dette_montant": 2955.6},
+    {"period": "2023-Q1", "dette_pib": 112.1, "dette_montant": 3020.8},
+    {"period": "2023-Q2", "dette_pib": 111.3, "dette_montant": 3055.7},
+    {"period": "2023-Q3", "dette_pib": 111.0, "dette_montant": 3095.6},
+    {"period": "2023-Q4", "dette_pib": 109.8, "dette_montant": 3102.5},
+    {"period": "2024-Q1", "dette_pib": 110.4, "dette_montant": 3160.8},
+    {"period": "2024-Q2", "dette_pib": 112.1, "dette_montant": 3229.7},
+    {"period": "2024-Q3", "dette_pib": 113.6, "dette_montant": 3301.4},
+    {"period": "2024-Q4", "dette_pib": 113.2, "dette_montant": 3305.3},
+    {"period": "2025-Q1", "dette_pib": 113.9, "dette_montant": 3345.4},
+    {"period": "2025-Q2", "dette_pib": 115.6, "dette_montant": 3416.3}
+  ]
+}
