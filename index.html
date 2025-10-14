@@ -292,6 +292,222 @@
             color: #155724;
         }
 
+        /* Styles pour les indicateurs avancés */
+        .badge-source {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid #e5e5e5;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            color: #6a6a6a;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(10px);
+            z-index: 10;
+        }
+
+        .advanced-indicators-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 40px;
+            margin: 40px 0;
+        }
+
+        .rg-display {
+            margin: 25px 0;
+        }
+
+        .rg-values {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .rg-item {
+            text-align: center;
+        }
+
+        .rg-label {
+            display: block;
+            font-size: 0.75rem;
+            color: #8a8a8a;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+        }
+
+        .rg-value {
+            font-size: 2rem;
+            font-weight: 200;
+            color: #2d2d2d;
+        }
+
+        .rg-separator {
+            font-size: 2rem;
+            font-weight: 200;
+            color: #8a8a8a;
+            padding: 0 10px;
+        }
+
+        .rg-result {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            padding: 15px;
+            background: #f8f8f8;
+            border-radius: 12px;
+        }
+
+        .rg-equals {
+            font-size: 1.5rem;
+            color: #8a8a8a;
+            font-weight: 300;
+        }
+
+        .rg-differential {
+            font-size: 2.5rem;
+            font-weight: 300;
+            letter-spacing: -1px;
+        }
+
+        .status-pill {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 20px;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .sparkline-container {
+            margin: 20px 0 15px;
+            padding: 10px;
+            background: #fafafa;
+            border-radius: 8px;
+            height: 70px;
+        }
+
+        .echeancier-section {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 
+                0 10px 30px rgba(0, 0, 0, 0.04),
+                0 2px 8px rgba(0, 0, 0, 0.06);
+            position: relative;
+        }
+
+        .echeancier-title {
+            font-size: 1.3rem;
+            font-weight: 300;
+            color: #2d2d2d;
+            margin-bottom: 10px;
+        }
+
+        .echeancier-subtitle {
+            font-size: 0.85rem;
+            color: #8a8a8a;
+            margin-bottom: 25px;
+        }
+
+        .echeancier-chart {
+            position: relative;
+            height: 300px;
+        }
+
+        .action-bar {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin: 40px 0;
+        }
+
+        .btn-download, .btn-methodology {
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 400;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-download {
+            background: white;
+            border: 1px solid #e5e5e5;
+            color: #4a4a4a;
+        }
+
+        .btn-download:hover {
+            background: #f8f8f8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-methodology {
+            background: #2d2d2d;
+            color: white;
+        }
+
+        .btn-methodology:hover {
+            background: #1a1a1a;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 992px) {
+            .advanced-indicators-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .badge-source {
+                font-size: 0.65rem;
+                padding: 3px 8px;
+                top: 10px;
+                right: 10px;
+            }
+
+            .rg-values {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .rg-separator {
+                display: none;
+            }
+
+            .rg-value {
+                font-size: 1.5rem;
+            }
+
+            .rg-differential {
+                font-size: 2rem;
+            }
+
+            .action-bar {
+                flex-direction: column;
+                padding: 0 20px;
+            }
+
+            .btn-download,
+            .btn-methodology {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
         .book-showcase {
             display: grid;
             grid-template-columns: 220px 1fr;
@@ -706,6 +922,7 @@
         <div id="content" style="display: none;">
             <div class="metrics-grid">
                 <div class="metric-card">
+                    <div class="badge-source">APU • T2 2025</div>
                     <div class="metric-value" id="current-montant">--</div>
                     <div class="metric-label">Milliards d'euros</div>
                     <span class="metric-trend" id="trend-montant">
@@ -714,6 +931,7 @@
                 </div>
 
                 <div class="metric-card">
+                    <div class="badge-source">APU • T2 2025</div>
                     <div class="metric-value" id="current-pib">--</div>
                     <div class="metric-label">Ratio Dette/PIB</div>
                     <span class="metric-trend" id="trend-pib">
@@ -722,22 +940,43 @@
                 </div>
 
                 <div class="metric-card">
+                    <div class="badge-source">INSEE • 2025</div>
                     <div class="metric-value" id="per-capita">--</div>
-                    <div class="metric-label">Dette par habitant</div>
+                    <div class="metric-label">Dette par habitant
+                        <span class="tooltip-container">
+                            <span class="tooltip-icon">?</span>
+                            <span class="tooltip-text">
+                                <strong>Indicateur pédagogique</strong><br>
+                                Calcul = encours APU / population totale INSEE<br>
+                                ⚠️ Il ne s'agit pas d'une dette individuelle exigible
+                            </span>
+                        </span>
+                    </div>
                     <span class="metric-trend" id="trend-capita">
                         <span class="trend-icon">↑</span> <span id="trend-capita-text">--</span>
                     </span>
                 </div>
 
                 <div class="metric-card">
+                    <div class="badge-source">PLF • 2025</div>
                     <div class="metric-value" id="interets-annuel">--</div>
-                    <div class="metric-label">Mds€ d'intérêts/an</div>
+                    <div class="metric-label">Mds€ d'intérêts/an
+                        <span class="tooltip-container">
+                            <span class="tooltip-icon">?</span>
+                            <span class="tooltip-text">
+                                <strong>Charge d'intérêts APU</strong><br>
+                                Base: droits constatés (comptes nationaux)<br>
+                                ~66 Mds€ APU / ~55 Mds€ État seul
+                            </span>
+                        </span>
+                    </div>
                     <span class="metric-trend">
                         <span class="trend-icon">•</span> <span>~2% du montant</span>
                     </span>
                 </div>
 
                 <div class="metric-card">
+                    <div class="badge-source">APU • T2 2025</div>
                     <div class="metric-value" id="solde-primaire">--</div>
                     <div class="metric-label">
                         Solde primaire
@@ -745,8 +984,9 @@
                             <span class="tooltip-icon">?</span>
                             <span class="tooltip-text">
                                 <strong>Le solde primaire</strong> correspond à la différence entre les recettes publiques (impôts, cotisations) et les dépenses publiques, <strong>hors paiement des intérêts</strong> de la dette.<br><br>
-                                ✓ Positif = l'État gère bien ses finances courantes<br>
-                                ✗ Négatif = l'État vit au-dessus de ses moyens
+                                • APU, 12 mois glissants<br>
+                                • ✓ Positif = l'État gère bien ses finances courantes<br>
+                                • ✗ Négatif = l'État vit au-dessus de ses moyens
                             </span>
                         </span>
                     </div>
@@ -761,14 +1001,16 @@
 
             <div class="chart-grid">
                 <div class="chart-half">
+                    <div class="badge-source">AFT • T2 2025</div>
                     <h3 class="chart-half-title">Qui détient la dette ?</h3>
-                    <p class="chart-half-subtitle">Répartition par détenteur • <span id="badge-detenteurs">T2 2025</span></p>
+                    <p class="chart-half-subtitle">Répartition par détenteur • Valeur nominale</p>
                     <div class="chart-compact">
                         <canvas id="chartDetenteurs"></canvas>
                     </div>
                 </div>
 
                 <div class="chart-half">
+                    <div class="badge-source">APU • 2020-2024</div>
                     <h3 class="chart-half-title">Solde primaire</h3>
                     <p class="chart-half-subtitle">Évolution sur 5 ans (hors intérêts)</p>
                     <div class="chart-compact">
@@ -789,6 +1031,40 @@
                 <div class="chart-wrapper">
                     <canvas id="chartMontant"></canvas>
                 </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- NOUVEAUX INDICATEURS AVANCÉS -->
+            <div class="advanced-indicators-grid">
+                <!-- Indicateur r-g -->
+                <div id="indicateur-rg">
+                    <!-- Sera rempli par JavaScript -->
+                </div>
+
+                <!-- Échéancier de remboursement -->
+                <div class="echeancier-section">
+                    <div class="badge-source">État • AFT • Oct 2025</div>
+                    <div class="echeancier-header">
+                        <div>
+                            <h3 class="echeancier-title">Échéancier de remboursement</h3>
+                            <p class="echeancier-subtitle">Amortissements MLT 2025-2029 (Mds€)</p>
+                        </div>
+                    </div>
+                    <div class="echeancier-chart">
+                        <canvas id="chartEcheancier"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Boutons d'action -->
+            <div class="action-bar">
+                <button class="btn-download" onclick="telechargerDonnees()">
+                    📊 Télécharger les données (CSV)
+                </button>
+                <a href="methodologie.html" class="btn-methodology" target="_blank">
+                    📖 Données & Méthodologie
+                </a>
             </div>
 
             <div class="divider"></div>
@@ -1087,6 +1363,9 @@
     </div>
     
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
+    <script src="dette-temps-reel.js"></script>
+    <script src="indicateurs-avances.js"></script>
     <script>
 
         // Configuration des liens Amazon
@@ -1481,6 +1760,58 @@
         
         // Charger les données au démarrage
         loadData();
+
+        // Initialiser les indicateurs avancés
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialiser les indicateurs avancés
+            if (typeof IndicateursAvances !== 'undefined') {
+                const indicateurs = new IndicateursAvances();
+                indicateurs.creerIndicateurRG('indicateur-rg');
+                indicateurs.creerEcheancier('chartEcheancier');
+                
+                // Stocker l'instance pour le téléchargement CSV
+                window.indicateursInstance = indicateurs;
+            }
+        });
+
+        // Fonction de téléchargement des données en CSV
+        function telechargerDonnees() {
+            // Créer le CSV avec toutes les données
+            let csv = 'Indicateur,Période,Valeur,Unité,Source\n';
+            
+            // Ajouter les données principales
+            const donnees = DATA_INSEE.data;
+            const derniere = donnees[donnees.length - 1];
+            
+            csv += `Dette publique,${derniere.period},${derniere.dette_montant},Mds€,INSEE\n`;
+            csv += `Dette/PIB,${derniere.period},${derniere.dette_pib},%,INSEE\n`;
+            csv += `Dette par habitant,${derniere.period},${Math.round((derniere.dette_montant * 1000000000) / 67000000)},€,Calcul\n`;
+            csv += `Charge d'intérêts,2025,${(derniere.dette_montant * 0.02).toFixed(1)},Mds€,Estimation\n`;
+            
+            // Ajouter l'historique
+            donnees.forEach(d => {
+                csv += `Dette historique,${d.period},${d.dette_montant},Mds€,INSEE\n`;
+                csv += `Dette/PIB historique,${d.period},${d.dette_pib},%,INSEE\n`;
+            });
+            
+            // Si les indicateurs avancés sont disponibles
+            if (window.indicateursInstance) {
+                // Le module indicateurs-avances a sa propre méthode CSV
+                window.indicateursInstance.genererCSV();
+                return;
+            }
+            
+            // Créer le fichier à télécharger
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', `dette_publique_france_${new Date().toISOString().split('T')[0]}.csv`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
 
         // Gestion du modal de préface Dette Souveraine
         const modal = document.getElementById('modal-preface');
