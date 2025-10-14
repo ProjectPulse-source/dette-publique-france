@@ -804,7 +804,26 @@
             }
 
             h1 {
-                font-size: 2rem;
+                font-size: 1.8rem;
+                margin-bottom: 8px;
+            }
+
+            .subtitle {
+                font-size: 0.85rem;
+            }
+
+            .intro-message {
+                padding: 20px 20px !important;
+                margin-bottom: 30px;
+            }
+
+            .intro-message h2 {
+                font-size: 1.1rem !important;
+            }
+
+            .intro-message p {
+                font-size: 0.85rem !important;
+                line-height: 1.6 !important;
             }
 
             .metrics-grid {
@@ -812,16 +831,25 @@
                 gap: 20px;
             }
 
+            .metric-card {
+                padding: 25px 20px;
+            }
+
             .content-section {
-                padding: 30px 25px;
+                padding: 30px 20px;
+                margin-bottom: 25px;
             }
 
             .chart-wrapper {
-                height: 300px;
+                height: 250px;
             }
 
             .metric-value {
-                font-size: 2.2rem;
+                font-size: 2rem;
+            }
+
+            .metric-label {
+                font-size: 0.75rem;
             }
 
             .chart-grid {
@@ -830,47 +858,229 @@
             }
 
             .chart-half {
-                padding: 30px 20px;
+                padding: 25px 20px;
             }
 
             .book-showcase {
                 grid-template-columns: 1fr;
                 text-align: center;
-                gap: 30px;
+                gap: 25px;
             }
 
             .book-cover {
                 margin: 0 auto;
-                width: 180px;
-                height: 260px;
+                width: 160px;
+                height: 230px;
+            }
+
+            .book-info h2 {
+                font-size: 1.4rem;
+            }
+
+            .book-description {
+                font-size: 0.85rem;
             }
 
             .action-buttons {
                 flex-direction: column;
+                gap: 12px;
             }
 
             .btn {
                 width: 100%;
                 justify-content: center;
+                padding: 12px 20px;
+                font-size: 0.85rem;
             }
 
             .book-features {
                 justify-content: center;
                 flex-wrap: wrap;
+                gap: 20px;
+            }
+
+            .feature {
+                font-size: 0.8rem;
             }
 
             .modal-content {
                 width: 95%;
                 margin: 5% auto;
+                max-height: 90vh;
             }
 
             .modal-header, .modal-body, .modal-sources {
-                padding: 25px 20px;
+                padding: 20px 15px;
+            }
+
+            .modal-header h2 {
+                font-size: 1.5rem;
+            }
+
+            .modal-body {
+                font-size: 0.85rem;
             }
 
             .tooltip-text {
-                width: 260px;
-                font-size: 0.8rem;
+                width: 250px;
+                font-size: 0.75rem;
+                left: 0;
+                transform: translateX(0);
+                margin-left: -20px;
+            }
+
+            .share-grid {
+                gap: 12px;
+            }
+
+            .share-button {
+                width: 48px;
+                height: 48px;
+            }
+
+            .footer-info {
+                font-size: 0.75rem;
+            }
+
+            .footer-info p {
+                font-size: 0.7rem !important;
+            }
+
+            /* Badges plus petits sur mobile */
+            .badge-source {
+                font-size: 0.6rem;
+                padding: 2px 6px;
+                top: 8px;
+                right: 8px;
+            }
+
+            /* Indicateurs r-g responsive */
+            .rg-values {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .rg-separator {
+                display: none;
+            }
+
+            .rg-value {
+                font-size: 1.5rem;
+            }
+
+            .rg-differential {
+                font-size: 1.8rem;
+            }
+
+            /* Actions responsive */
+            .action-bar {
+                flex-direction: column;
+                padding: 0 15px;
+                margin: 30px 0;
+            }
+
+            .btn-download,
+            .btn-methodology {
+                width: 100%;
+                justify-content: center;
+                font-size: 0.85rem;
+                padding: 12px;
+            }
+
+            /* Ajustements spéciaux pour très petits écrans */
+            @media (max-width: 375px) {
+                h1 {
+                    font-size: 1.5rem;
+                }
+
+                .metric-value {
+                    font-size: 1.8rem;
+                }
+
+                .book-cover {
+                    width: 140px;
+                    height: 200px;
+                }
+            }
+        }
+
+        /* Tablettes */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .container {
+                padding: 30px;
+            }
+
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 25px;
+            }
+
+            .chart-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .advanced-indicators-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .book-showcase {
+                grid-template-columns: 180px 1fr;
+                gap: 30px;
+            }
+
+            .book-cover {
+                width: 180px;
+                height: 260px;
+            }
+        }
+
+        /* Desktop large */
+        @media (min-width: 1400px) {
+            .container {
+                max-width: 1300px;
+            }
+        }
+
+        /* Amélioration de l'accessibilité mobile */
+        @media (hover: none) and (pointer: coarse) {
+            /* Augmenter les zones tactiles */
+            .btn {
+                min-height: 48px;
+            }
+
+            .share-button {
+                min-width: 48px;
+                min-height: 48px;
+            }
+
+            /* Désactiver les effets de hover sur tactile */
+            .metric-card:hover {
+                transform: none;
+            }
+
+            .share-button:hover {
+                transform: none;
+            }
+        }
+
+        /* Support du mode paysage mobile */
+        @media (max-height: 500px) and (orientation: landscape) {
+            body {
+                padding: 10px 20px;
+            }
+
+            .header {
+                margin-bottom: 20px;
+            }
+
+            .intro-message {
+                margin-bottom: 20px;
+                padding: 15px 20px !important;
+            }
+
+            .chart-wrapper {
+                height: 200px;
             }
         }
 
@@ -914,6 +1124,38 @@
             <h1>Dette Publique Française</h1>
             <p class="subtitle" id="current-date">TABLEAU DE BORD – OCTOBRE 2025</p>
         </header>
+
+        <!-- MESSAGE D'INTRODUCTION SUR L'IMPORTANCE DE LA DETTE -->
+        <div class="intro-message" style="background: #ffffff; border-left: 3px solid #d4af37; padding: 30px 35px; border-radius: 12px; margin-bottom: 40px; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04); position: relative;">
+            <h2 style="font-size: 1.3rem; font-weight: 300; margin-bottom: 15px; color: #2d2d2d;">
+                Pourquoi suivre la dette publique ?
+            </h2>
+            <p style="font-size: 0.95rem; line-height: 1.7; margin-bottom: 18px; color: #4a4a4a;">
+                <strong>La dette structure intégralement notre système économique et social.</strong> 
+                Chaque euro emprunté aujourd'hui est un arbitrage sur demain : moins de lits d'hôpital, 
+                des classes surchargées, des services publics dégradés. En 2026, les intérêts de la dette 
+                pourraient devenir le premier poste budgétaire de l'État – devant l'éducation, la santé, la sécurité.
+            </p>
+            <p style="font-size: 0.9rem; line-height: 1.6; color: #5a5a5a;">
+                Ce tableau de bord rend visible cette mécanique invisible : qui détient la dette, 
+                combien elle coûte, à quelle vitesse elle croît. Des données officielles, 
+                transparentes, vérifiables – pour comprendre qui paie vraiment.
+            </p>
+            <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #f0f0f0;">
+                <a href="#book-section" style="color: #d4af37; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; font-size: 0.9rem; font-weight: 400; transition: all 0.3s;">
+                    Découvrir le livre "Dette Souveraine – Qui paie vraiment ?"
+                    <span style="display: inline-block; transform: translateX(0); transition: transform 0.3s;">→</span>
+                </a>
+            </div>
+            <style>
+                .intro-message a:hover {
+                    color: #b8941f !important;
+                }
+                .intro-message a:hover span {
+                    transform: translateX(5px) !important;
+                }
+            </style>
+        </div>
 
         <div id="loading" class="loading">
             Chargement des données INSEE...
@@ -1069,7 +1311,7 @@
 
             <div class="divider"></div>
 
-            <div class="content-section">
+            <div class="content-section" id="book-section">
                 <div class="book-showcase">
                     <div class="book-cover">
                         <img src="1760393721875_image.png" alt="Dette Souveraine - Qui paie vraiment" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'padding: 20px; line-height: 1.6;\'><div style=\'font-size: 1.1rem; font-weight: 500; margin-bottom: 10px;\'>DETTE<br>SOUVERAINE</div><div style=\'font-size: 0.8rem; color: #aaa; margin-bottom: 20px;\'>—</div><div style=\'font-size: 0.75rem; color: #aaa;\'>Qui paie<br>vraiment</div></div>';">
@@ -1239,7 +1481,21 @@
                 <div class="footer-info">
                     <strong>Source:</strong> Institut National de la Statistique et des Études Économiques (INSEE)<br>
                     <span id="update-time">Dernière mise à jour: --</span><br>
-                    <a href="https://github.com/ProjectPulse-source/dette-publique-france" style="color: #6a6a6a; text-decoration: none;" target="_blank">Voir le code source sur GitHub</a>
+                    <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #f0f0f0;">
+                        <strong>Code & Données – Transparence et droits d'usage</strong><br>
+                        <p style="font-size: 0.8rem; line-height: 1.5; margin-top: 8px;">
+                            Code source sous licence <strong>AGPL-3.0</strong> (toute version déployée doit publier ses modifications)<br>
+                            Contenus et visuels sous licence <strong>CC BY-NC-SA 4.0</strong> (usage non-commercial avec attribution)<br>
+                            Données brutes sous licences d'origine (INSEE/Etalab 2.0, AFT, BdF)<br>
+                            <a href="https://github.com/ProjectPulse-source/dette-publique-france" style="color: #6a6a6a;" target="_blank">
+                                Voir le code source, contribuer ou signaler un problème sur GitHub
+                            </a>
+                        </p>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 0.75rem; color: #8a8a8a;">
+                        Périmètre APU – dette Maastricht | MAJ trimestrielle, latence ≈90j | 
+                        <a href="methodologie.html" style="color: #8a8a8a;">Méthodologie complète</a>
+                    </div>
                 </div>
             </div>
         </div>
