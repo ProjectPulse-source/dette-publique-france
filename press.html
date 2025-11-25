@@ -1,0 +1,1662 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dette Publique - Dossier de Presse</title>
+    <meta name="description" content="Dossier de presse - Dette Publique&nbsp;: Qui paie vraiment&nbsp;? par Stéphane LALUT">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
+            color: #1a1a1a;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        /* Container principal */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+        
+        /* Boutons de partage sociaux */
+        .share-buttons {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 999;
+        }
+        
+        .share-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: white;
+            border: 2px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: #666;
+            font-size: 1.2em;
+        }
+        
+        .share-btn:hover {
+            background: #b91c1c;
+            color: white;
+            border-color: #b91c1c;
+            transform: scale(1.1);
+            box-shadow: 0 5px 20px rgba(185, 28, 28, 0.3);
+        }
+        
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 80px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .press-tag {
+            display: inline-block;
+            background: #b91c1c;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 0;
+            font-size: 0.75em;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+        }
+        
+        /* Bloc presse rapide - sobre et premium */
+        .press-quick-info {
+            background: white;
+            padding: 50px;
+            border-radius: 2px;
+            margin-bottom: 40px;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+        }
+        
+        .press-tag-large {
+            display: inline-block;
+            background: #1a1a1a;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 0;
+            font-size: 0.75em;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .press-tag-large::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background: #b91c1c;
+        }
+        
+        .quick-facts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .quick-fact {
+            background: #fafafa;
+            padding: 25px;
+            border-radius: 0;
+            border-left: 3px solid #b91c1c;
+            transition: all 0.3s ease;
+        }
+        
+        .quick-fact:hover {
+            background: white;
+        }
+        
+        .fact-label {
+            font-size: 0.75em;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: #666;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .fact-value {
+            color: #1a1a1a;
+            line-height: 1.7;
+            font-size: 0.95em;
+        }
+        
+        .press-highlight {
+            background: #1a1a1a;
+            color: white;
+            padding: 25px 35px;
+            border-radius: 0;
+            text-align: center;
+            font-size: 1em;
+            line-height: 1.7;
+            border-left: 3px solid #b91c1c;
+        }
+        
+        .press-highlight strong {
+            color: white;
+            font-weight: 600;
+        }
+        
+        /* Angles médias - design sobre */
+        .angles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            margin: 40px 0;
+            background: #e0e0e0;
+        }
+        
+        .angle-card {
+            background: white;
+            padding: 35px;
+            border-radius: 0;
+            transition: all 0.3s ease;
+            text-align: left;
+            border-bottom: 2px solid transparent;
+        }
+        
+        .angle-card:hover {
+            background: #fafafa;
+            border-bottom-color: #b91c1c;
+        }
+        
+        .angle-card:hover .angle-icon svg {
+            stroke: #b91c1c;
+        }
+        
+        .angle-icon {
+            margin-bottom: 20px;
+            color: #1a1a1a;
+        }
+        
+        .angle-icon svg {
+            stroke: #1a1a1a;
+            transition: stroke 0.3s ease;
+        }
+        
+        .angle-card h3 {
+            color: #1a1a1a;
+            font-size: 1.05em;
+            margin-bottom: 12px;
+            line-height: 1.5;
+            font-weight: 600;
+        }
+        
+        .angle-card p {
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.7;
+            text-align: left;
+        }
+        
+        /* Questions d'interview */
+        .questions-list {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .question-item {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            border-left: 5px solid #b91c1c;
+            display: flex;
+            gap: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .question-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 8px 30px rgba(185, 28, 28, 0.15);
+        }
+        
+        .question-number {
+            flex-shrink: 0;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #b91c1c 0%, #dc2626 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2em;
+        }
+        
+        .question-content h4 {
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 1.05em;
+            line-height: 1.5;
+        }
+        
+        .question-hint {
+            color: #999;
+            font-size: 0.9em;
+            font-style: italic;
+            margin: 0;
+        }
+        
+        /* Service presse box - sobre */
+        .service-presse-box {
+            background: #fafafa;
+            padding: 45px;
+            border-radius: 0;
+            margin-top: 50px;
+            border: 1px solid #e0e0e0;
+            border-left: 3px solid #1a1a1a;
+            text-align: center;
+        }
+        
+        .service-presse-box h3 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        
+        .service-presse-box p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+        
+        .service-presse-box a {
+            color: #b91c1c;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .service-presse-box a:hover {
+            text-decoration: underline;
+        }
+        
+        
+        .main-title {
+            font-family: 'Inter', Impact, sans-serif;
+            font-size: 3.5em;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #b91c1c 0%, #7f1d1d 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .subtitle {
+            font-size: 1.5em;
+            color: #666;
+            letter-spacing: 0.1em;
+            margin-bottom: 30px;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+        
+        .subtitle::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #b91c1c, transparent);
+        }
+        
+        .author {
+            font-size: 1.3em;
+            color: #333;
+            font-weight: 500;
+            margin-top: 20px;
+        }
+        
+        /* Navigation rapide - sobre */
+        .quick-nav {
+            background: white;
+            padding: 35px;
+            border-radius: 0;
+            margin-bottom: 60px;
+            border: 1px solid #e0e0e0;
+            border-top: 2px solid #1a1a1a;
+        }
+        
+        .quick-nav h3 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 1.1em;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .nav-link {
+            padding: 10px 20px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #333;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 0.9em;
+        }
+        
+        .nav-link:hover {
+            background: #333;
+            color: white;
+            border-color: #b91c1c;
+            transform: translateY(-2px);
+        }
+        
+        /* Sections */
+        section {
+            margin-bottom: 80px;
+        }
+        
+        .section-title {
+            font-size: 2em;
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            padding-bottom: 20px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #b91c1c, transparent);
+        }
+        
+        /* Grid 2 colonnes */
+        .two-col-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        /* Card */
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 0;
+            border: 1px solid #e0e0e0;
+            position: relative;
+            border-left: 2px solid #1a1a1a;
+        }
+        
+        .card h3 {
+            color: #1a1a1a;
+            margin-bottom: 20px;
+            font-size: 1.2em;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .card p {
+            text-align: justify;
+            color: #333;
+            line-height: 1.8;
+        }
+        
+        .card ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .card ul li {
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .card ul li:last-child {
+            border-bottom: none;
+        }
+        
+        .card ul li strong {
+            color: #b91c1c;
+            display: inline-block;
+            min-width: 120px;
+        }
+        
+        /* Hero avec image */
+        .hero-section {
+            background: white;
+            padding: 60px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+            margin-bottom: 60px;
+            border: 1px solid rgba(185, 28, 28, 0.15);
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+        
+        .book-cover {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+        
+        .hero-content h2 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .hero-content p {
+            text-align: justify;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 15px;
+        }
+        
+        .hero-content .highlight {
+            background: linear-gradient(135deg, rgba(185, 28, 28, 0.1) 0%, rgba(185, 28, 28, 0.05) 100%);
+            padding: 20px;
+            border-left: 4px solid #b91c1c;
+            border-radius: 4px;
+            margin: 20px 0;
+            font-style: italic;
+        }
+        
+        /* Listes structurées */
+        .dimension-list, .simple-list {
+            list-style: none;
+            padding: 0;
+            margin: 15px 0;
+        }
+        
+        .dimension-list li, .simple-list li {
+            padding: 8px 0 8px 30px;
+            position: relative;
+            color: #333;
+        }
+        
+        .dimension-list li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #b91c1c;
+            font-weight: 700;
+        }
+        
+        .simple-list li::before {
+            content: "•";
+            position: absolute;
+            left: 10px;
+            color: #b91c1c;
+            font-weight: 700;
+            font-size: 1.2em;
+        }
+        
+        /* Citations */
+        .quote-box {
+            background: linear-gradient(135deg, #333 0%, #1a1a1a 100%);
+            color: white;
+            padding: 50px;
+            border-radius: 12px;
+            margin: 40px 0;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        }
+        
+        .quote-box::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            font-size: 6em;
+            opacity: 0.2;
+            font-family: Georgia, serif;
+        }
+        
+        .quote-box p {
+            font-size: 1.3em;
+            line-height: 1.8;
+            text-align: center;
+            font-style: italic;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .stat-box {
+            background: white;
+            padding: 35px 25px;
+            border-radius: 0;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+        
+        .stat-box:hover {
+            border-bottom-color: #b91c1c;
+            background: #fafafa;
+        }
+        
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: 300;
+            color: #b91c1c;
+            display: block;
+            margin-bottom: 10px;
+            letter-spacing: -0.02em;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            font-weight: 500;
+        }
+        
+        /* Boutons d'action */
+        .action-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 15px 40px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            transition: all 0.3s ease;
+            display: inline-block;
+            text-align: center;
+        }
+        
+        .btn-primary {
+            background: #b91c1c;
+            color: white;
+            border: 2px solid #b91c1c;
+        }
+        
+        .btn-primary:hover {
+            background: white;
+            color: #b91c1c;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(185, 28, 28, 0.25);
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: #333;
+            border: 2px solid #333;
+        }
+        
+        .btn-secondary:hover {
+            background: #333;
+            color: white;
+        }
+        
+        /* Contact */
+        .contact-box {
+            background: white;
+            padding: 50px;
+            border-radius: 0;
+            border: 1px solid #e0e0e0;
+            text-align: center;
+        }
+        
+        .contact-box h3 {
+            font-size: 1.5em;
+            margin-bottom: 30px;
+            color: #333;
+        }
+        
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .contact-item .icon {
+            width: 50px;
+            height: 50px;
+            background: #1a1a1a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5em;
+        }
+        
+        .contact-item a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .contact-item a:hover {
+            color: #b91c1c;
+        }
+        
+        /* Downloads */
+        .download-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+        
+        .download-card {
+            background: white;
+            padding: 30px 25px;
+            border-radius: 0;
+            border: 1px solid #e0e0e0;
+            text-align: center;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+        
+        .download-card:hover {
+            border-bottom-color: #b91c1c;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+        
+        .download-card .icon {
+            margin-bottom: 15px;
+            color: #1a1a1a;
+        }
+        
+        .download-card:hover .icon {
+            color: #b91c1c;
+        }
+        
+        .download-card h4 {
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 1em;
+        }
+        
+        .download-card p {
+            color: #666;
+            font-size: 0.85em;
+            line-height: 1.5;
+        }
+        
+        /* Les chapitres */
+        .chapters-list {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .chapter-item {
+            background: white;
+            padding: 25px 30px;
+            border-radius: 0;
+            margin-bottom: 15px;
+            border: 1px solid #e0e0e0;
+            border-left: 3px solid #b91c1c;
+            display: flex;
+            gap: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .chapter-item:hover {
+            background: #fafafa;
+            transform: translateX(5px);
+        }
+        
+        .chapter-item h4 {
+            color: #1a1a1a;
+            margin-bottom: 8px;
+            font-size: 1em;
+            font-weight: 600;
+        }
+        
+        .chapter-item p {
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.6;
+            margin: 0;
+        }
+        
+        .part-title {
+            background: #1a1a1a;
+            color: white;
+            padding: 15px 25px;
+            margin: 30px 0 20px 0;
+            font-weight: 600;
+            font-size: 1.1em;
+            letter-spacing: 0.05em;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 50px 0;
+            margin-top: 60px;
+            border-top: 1px solid #e0e0e0;
+            color: #666;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-section {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .hero-section img {
+                max-width: 350px;
+                margin: 0 auto;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .angles-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .two-col-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .download-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .quick-facts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            .main-title {
+                font-size: 2.5em;
+            }
+            
+            .share-buttons {
+                display: none;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .download-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Styles d'impression */
+        @media print {
+            body {
+                background: white;
+                font-size: 10pt;
+                color: #000;
+            }
+            
+            .container {
+                max-width: 100%;
+                padding: 15px;
+            }
+            
+            /* Masquer les éléments d'interface */
+            .share-buttons {
+                display: none !important;
+            }
+            
+            .action-buttons {
+                display: none !important;
+            }
+            
+            /* Masquer la navigation en print */
+            .quick-nav {
+                display: none !important;
+            }
+            
+            /* Header compact */
+            header {
+                page-break-inside: avoid;
+                break-inside: avoid;
+                margin-bottom: 20px;
+                padding-bottom: 15px;
+            }
+            
+            /* Réduire la taille du titre */
+            .main-title {
+                font-size: 2.2em;
+                margin-bottom: 10px;
+                color: #b91c1c;
+                background: none;
+                -webkit-background-clip: unset;
+                background-clip: unset;
+            }
+            
+            .subtitle {
+                font-size: 1.2em;
+                margin-bottom: 10px;
+            }
+            
+            .author {
+                margin-top: 5px;
+                margin-bottom: 0;
+            }
+            
+            .press-tag {
+                margin-bottom: 15px;
+            }
+            
+            /* Bloc presse - permettre les coupures */
+            .press-quick-info {
+                padding: 25px;
+                margin-bottom: 20px;
+                page-break-inside: auto;
+                break-inside: auto;
+            }
+            
+            .press-tag-large {
+                margin-bottom: 20px;
+            }
+            
+            .quick-facts-grid {
+                page-break-inside: auto;
+                break-inside: auto;
+                gap: 15px;
+            }
+            
+            .quick-fact {
+                padding: 15px;
+                page-break-inside: avoid;
+                break-inside: avoid;
+                margin-bottom: 10px;
+            }
+            
+            .press-highlight {
+                padding: 15px 20px;
+                margin-top: 20px;
+            }
+            
+            /* Gestion des sauts de page */
+            h1, h2, h3, h4, h5, h6 {
+                page-break-after: avoid;
+                break-after: avoid;
+            }
+            
+            section {
+                page-break-inside: auto;
+                break-inside: auto;
+                margin-bottom: 25px;
+            }
+            
+            .section-title {
+                page-break-after: avoid;
+                break-after: avoid;
+                margin-top: 20px;
+                margin-bottom: 15px;
+                font-size: 1.5em;
+            }
+            
+            /* Cards et éléments */
+            .card, .quote-box, .contact-box,
+            .service-presse-box {
+                page-break-inside: avoid;
+                break-inside: avoid;
+                margin-bottom: 15px;
+                padding: 25px;
+            }
+            
+            /* Grilles - permettre les coupures */
+            .angles-grid, .download-grid {
+                page-break-inside: auto;
+                break-inside: auto;
+            }
+            
+            .angle-card, .download-card {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+            
+            /* Hero section */
+            .hero-section {
+                grid-template-columns: 250px 1fr;
+                gap: 30px;
+                padding: 30px;
+                page-break-inside: auto;
+                break-inside: auto;
+            }
+            
+            .book-cover {
+                max-width: 250px;
+            }
+            
+            /* Stats */
+            .stats-grid {
+                gap: 15px;
+                margin: 20px 0;
+            }
+            
+            .stat-box {
+                padding: 20px 15px;
+            }
+            
+            .stat-number {
+                font-size: 1.8em;
+            }
+            
+            /* Images */
+            img {
+                max-width: 100%;
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+            
+            /* Liens */
+            a {
+                color: #1a1a1a;
+                text-decoration: none;
+            }
+            
+            a[href^="http"]:after {
+                content: " (" attr(href) ")";
+                font-size: 0.65em;
+                color: #666;
+                word-break: break-all;
+            }
+            
+            a[href^="#"]:after,
+            a[href^="javascript:"]:after,
+            a[href^="mailto:"]:after {
+                content: "";
+            }
+            
+            /* Améliorer la lisibilité */
+            .download-card {
+                border: 1px solid #ddd;
+                padding: 15px;
+            }
+            
+            /* Chapitres */
+            .chapters-list {
+                page-break-inside: auto;
+            }
+            
+            .chapter-item {
+                page-break-inside: avoid;
+                break-inside: avoid;
+                padding: 15px 20px;
+                margin-bottom: 10px;
+            }
+            
+            .part-title {
+                page-break-after: avoid;
+                break-after: avoid;
+                padding: 10px 15px;
+                margin: 20px 0 10px 0;
+            }
+            
+            /* Questions */
+            .question-item {
+                page-break-inside: avoid;
+                break-inside: avoid;
+                padding: 15px;
+                margin-bottom: 10px;
+            }
+            
+            /* Footer */
+            footer {
+                margin-top: 20px;
+                padding: 20px 0;
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Boutons de partage -->
+    <div class="share-buttons">
+        <a href="javascript:void(0);" class="share-btn" onclick="shareOnTwitter();" title="Partager sur Twitter">𝕏</a>
+        <a href="javascript:void(0);" class="share-btn" onclick="shareOnFacebook();" title="Partager sur Facebook">f</a>
+        <a href="javascript:void(0);" class="share-btn" onclick="shareOnLinkedIn();" title="Partager sur LinkedIn">in</a>
+        <a href="javascript:void(0);" class="share-btn" onclick="copyLink();" title="Copier le lien">🔗</a>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="press-tag">Dossier de Presse</div>
+            <h1 class="main-title">Dette Publique</h1>
+            <p class="subtitle">Qui paie vraiment&nbsp;?</p>
+            <p class="author">par Stéphane LALUT</p>
+        </header>
+
+        <!-- Bloc "Pour la presse - En 30 secondes" -->
+        <section class="press-quick-info">
+            <div class="press-tag-large">POUR LA PRESSE – L'ESSENTIEL EN 30 SECONDES</div>
+            
+            <div class="quick-facts-grid">
+                <div class="quick-fact">
+                    <div class="fact-label">Genre</div>
+                    <div class="fact-value">Essai – Économie / Politique / Société</div>
+                </div>
+                
+                <div class="quick-fact">
+                    <div class="fact-label">Sujet</div>
+                    <div class="fact-value">66 milliards d'intérêts par an&nbsp;: qui décide, qui paie, pourquoi vous n'avez jamais voté pour ça</div>
+                </div>
+                
+                <div class="quick-fact">
+                    <div class="fact-label">Pourquoi maintenant&nbsp;?</div>
+                    <div class="fact-value">2026&nbsp;: les intérêts de la dette deviennent le 1<sup>er</sup> poste budgétaire — devant l'école, la police, la justice</div>
+                </div>
+                
+                <div class="quick-fact">
+                    <div class="fact-label">Angle éditorial</div>
+                    <div class="fact-value">Ni pamphlet ni vulgarisation&nbsp;: une enquête documentée sur la mécanique du transfert</div>
+                </div>
+                
+                <div class="quick-fact">
+                    <div class="fact-label">Cible médias</div>
+                    <div class="fact-value">Journalistes économie, politique, société, services publics, pouvoir d'achat</div>
+                </div>
+                
+                <div class="quick-fact">
+                    <div class="fact-label">Disponibilité auteur</div>
+                    <div class="fact-value">Interviews radio, podcasts, print (20-45 min) – à distance uniquement</div>
+                </div>
+            </div>
+            
+            <div class="press-highlight">
+                <strong>Exemplaire service presse disponible sur demande</strong><br>
+                Contactez <a href="/cdn-cgi/l/email-protection#b7c4c3d2c7dfd6d9d29a9a9adbf7d8c2c3dbd8d8dc99d1c5" style="color: #b91c1c; text-decoration: underline;"><span class="__cf_email__" data-cfemail="f3808796839b929d96dedede9fb39c86879f9c9c98dd9581">[email&#160;protected]</span></a> pour recevoir un lien de téléchargement Kindle.
+            </div>
+        </section>
+
+        <!-- Navigation rapide -->
+        <nav class="quick-nav">
+            <h3>Navigation rapide</h3>
+            <div class="nav-links">
+                <a href="#pitch" class="nav-link">Pitch</a>
+                <a href="#lire" class="nav-link">Lire</a>
+                <a href="#contenu" class="nav-link">Sommaire</a>
+                <a href="#angles" class="nav-link">Angles médias</a>
+                <a href="#questions" class="nav-link">Questions</a>
+                <a href="#infos" class="nav-link">Infos pratiques</a>
+                <a href="#auteur" class="nav-link">L'auteur</a>
+                <a href="#downloads" class="nav-link">Téléchargements</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section id="pitch" class="hero-section">
+            <img src="Dette_publique-Couverture_KINDLE.jpg" alt="Couverture Dette Publique" class="book-cover">
+            <div class="hero-content">
+                <div style="display: inline-block; background: #b91c1c; color: white; padding: 6px 15px; font-size: 0.75em; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 20px;">#1 Meilleure vente Économie · ★ 4,8/5</div>
+                
+                <h2>66 milliards. Chaque année. Sans débat.</h2>
+                
+                <p><strong>La question centrale&nbsp;:</strong> Qui paie vraiment la dette publique&nbsp;? Et surtout&nbsp;: qui a décidé que ce serait vous&nbsp;?</p>
+                
+                <p>Ce livre révèle une mécanique invisible&nbsp;: la dette publique n'est pas un problème technique à gérer, mais un <strong>instrument qui organise des transferts systématiques</strong>.</p>
+                
+                <div class="highlight">
+                    Du futur vers le présent. Des services publics vers les rentiers. De la démocratie vers les marchés. Ce ne sont pas des «&nbsp;effets secondaires&nbsp;» — c'est le fonctionnement même du système.
+                </div>
+                
+                <p><strong>Une enquête en deux temps&nbsp;:</strong></p>
+                <ul class="simple-list">
+                    <li>Partie I&nbsp;: démonter la mécanique du transfert</li>
+                    <li>Partie II&nbsp;: explorer quatre scénarios possibles (2025-2035)</li>
+                    <li>Sources officielles, chiffres vérifiables, arbitrages nommés</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-box">
+                <span class="stat-number">66 Mds€</span>
+                <span class="stat-label">Intérêts annuels</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-number">3 400 Mds€</span>
+                <span class="stat-label">Dette totale</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-number">1 600 €</span>
+                <span class="stat-label">Par foyer / an</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-number">#1</span>
+                <span class="stat-label">Meilleure vente Économie</span>
+            </div>
+        </div>
+
+        <!-- Lire -->
+        <section id="lire">
+            <h2 class="section-title">Lire Dette Publique</h2>
+            
+            <div style="max-width: 900px; margin: 0 auto;">
+                
+                <!-- Extrait immersif -->
+                <div style="background: #fafafa; padding: 50px; border-left: 4px solid #b91c1c; margin-bottom: 40px; position: relative;">
+                    <p style="font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.1em; color: #999; margin-bottom: 25px; font-weight: 600;">Extrait de la Préface</p>
+                    
+                    <p style="font-size: 1.15em; line-height: 2; color: #1a1a1a; text-align: justify; margin-bottom: 20px;">
+                        <span style="font-size: 2.5em; color: #b91c1c; font-family: Georgia, serif; float: left; line-height: 0.8; margin-right: 10px; margin-top: 5px;">«</span>
+                        3h du matin, urgences d'un CHU de province. Néons blafards, pleurs étouffés, sonneries incessantes. Un enfant brûlant de fièvre dans les bras de sa mère. Quatre heures d'attente. Brancard 18.
+                    </p>
+                    
+                    <p style="font-size: 1.15em; line-height: 2; color: #1a1a1a; text-align: justify; margin-bottom: 20px;">
+                        Marie — appelons-la ainsi — traverse le couloir en courant. Une infirmière pour tout le service, combien de patients&nbsp;? Elle a arrêté de compter après vingt. Pas un dysfonctionnement. Le fonctionnement.
+                    </p>
+                    
+                    <p style="font-size: 1.15em; line-height: 2; color: #1a1a1a; text-align: justify;">
+                        66 milliards d'euros par an. Les intérêts de la dette publique en 2025. Davantage que la Justice, la Police et l'Enseignement supérieur réunis. Cet argent ne bâtit rien. Il rémunère le passé. Marie attend des renforts. Vos impôts partent ailleurs.&nbsp;»
+                    </p>
+                </div>
+                
+                <!-- Citation finale -->
+                <div style="background: #1a1a1a; padding: 40px 50px; text-align: center;">
+                    <p style="font-size: 1.5em; line-height: 1.6; color: white; font-style: italic; margin: 0;">
+                        «&nbsp;On ne juge pas démocratiquement ce qu'on ne comprend pas. Et l'on ne comprend que ce qu'on peut expliquer.&nbsp;»
+                    </p>
+                    <p style="color: #b91c1c; margin-top: 15px; font-size: 0.9em; font-weight: 500;">
+                        — Dette Publique, Mode d'emploi
+                    </p>
+                </div>
+                
+            </div>
+        </section>
+
+        <!-- Contenu / Sommaire -->
+        <section id="contenu">
+            <h2 class="section-title">Sommaire</h2>
+            
+            <div class="chapters-list">
+                <div class="part-title">PARTIE I — LA MÉCANIQUE DU TRANSFERT</div>
+                
+                <div class="chapter-item">
+                    <div>
+                        <h4>Chapitre 1&nbsp;: L'Ordre Apparent</h4>
+                        <p>Généalogie d'une machine — de la dette du prince à la dette nationale</p>
+                    </div>
+                </div>
+                
+                <div class="chapter-item">
+                    <div>
+                        <h4>Chapitre 2&nbsp;: Le Mécanisme Anthropique</h4>
+                        <p>Le Grand Transfert — comment les systèmes déplacent le désordre</p>
+                    </div>
+                </div>
+                
+                <div class="chapter-item">
+                    <div>
+                        <h4>Chapitre 3&nbsp;: L'Engrenage Français</h4>
+                        <p>Les cadeaux fiscaux non compensés — le cas français décrypté</p>
+                    </div>
+                </div>
+                
+                <div class="chapter-item">
+                    <div>
+                        <h4>Chapitre 4&nbsp;: Les Architectes</h4>
+                        <p>Ni complot, ni hasard — qui construit le système&nbsp;?</p>
+                    </div>
+                </div>
+                
+                <div class="chapter-item">
+                    <div>
+                        <h4>Chapitre 5&nbsp;: Trois Laboratoires</h4>
+                        <p>Grèce, Japon, USA — trois modèles de dette, trois destins</p>
+                    </div>
+                </div>
+                
+                <div class="chapter-item">
+                    <div>
+                        <h4>Interlude&nbsp;: La Preuve par la Norvège</h4>
+                        <p>Un autre choix possible&nbsp;?</p>
+                    </div>
+                </div>
+                
+                <div class="chapter-item">
+                    <div>
+                        <h4>Chapitre 6&nbsp;: Le Méta-Laboratoire Chinois</h4>
+                        <p>L'anthropie autoritaire — quand l'État contrôle tout</p>
+                    </div>
+                </div>
+                
+                <div class="chapter-item">
+                    <div>
+                        <h4>Chapitre 7&nbsp;: Une dette, trois visages</h4>
+                        <p>Les créanciers invisibles — qui détient vraiment la dette&nbsp;?</p>
+                    </div>
+                </div>
+                
+                <div class="chapter-item">
+                    <div>
+                        <h4>Chapitre 8&nbsp;: La Dette Écologique</h4>
+                        <p>Le créancier ultime — quand la nature présente l'addition</p>
+                    </div>
+                </div>
+                
+                <div class="chapter-item">
+                    <div>
+                        <h4>Chapitre 9&nbsp;: L'Anatomie du Discours</h4>
+                        <p>L'analyse du langage — comment le discours fabrique le consentement</p>
+                    </div>
+                </div>
+                
+                <div class="chapter-item">
+                    <div>
+                        <h4>Chapitre 10&nbsp;: Accepter l'Inacceptable</h4>
+                        <p>La fabrique du consentement — pourquoi nous acceptons</p>
+                    </div>
+                </div>
+                
+                <div class="part-title">PARTIE II — LES SCÉNARIOS DU POSSIBLE (2025-2035)</div>
+                
+                <div class="chapter-item">
+                    <div>
+                        <h4>Chapitre 11&nbsp;: Scénario Continuité</h4>
+                        <p>Le rail sans bifurcation — que se passe-t-il si rien ne change&nbsp;?</p>
+                    </div>
+                </div>
+                
+                <div class="chapter-item">
+                    <div>
+                        <h4>Chapitre 12&nbsp;: Scénario Réforme Européenne</h4>
+                        <p>La transformation négociée — refonder les règles du jeu</p>
+                    </div>
+                </div>
+                
+                <div class="chapter-item">
+                    <div>
+                        <h4>Chapitre 13&nbsp;: Les Trois Voies de Rupture</h4>
+                        <p>Quand l'Europe dit non — restructuration, inflation, sortie</p>
+                    </div>
+                </div>
+                
+                <div class="chapter-item">
+                    <div>
+                        <h4>Chapitre 14&nbsp;: Scénario Accélération Technologique</h4>
+                        <p>Le joker productiviste — l'IA peut-elle tout résoudre&nbsp;?</p>
+                    </div>
+                </div>
+                
+                <div class="chapter-item" style="border-left-color: #1a1a1a;">
+                    <div>
+                        <h4>Conclusion&nbsp;: Le Choix démocratique du Désordre</h4>
+                        <p>Maintenant que vous savez, que choisissez-vous&nbsp;?</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Angles médias -->
+        <section id="angles">
+            <h2 class="section-title">Angles médias suggérés</h2>
+            
+            <div class="angles-grid">
+                <div class="angle-card">
+                    <div class="angle-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                        </svg>
+                    </div>
+                    <h3>Économie&nbsp;: Le Premier Poste Budgétaire</h3>
+                    <p>2026&nbsp;: les intérêts de la dette dépassent l'éducation. Comment en est-on arrivé là&nbsp;?</p>
+                </div>
+                
+                <div class="angle-card">
+                    <div class="angle-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M3 21h18M3 10h18M3 7l9-4 9 4M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3"/>
+                        </svg>
+                    </div>
+                    <h3>Politique&nbsp;: La Démocratie Court-Circuitée</h3>
+                    <p>Avez-vous voté pour moins de santé et plus de dette&nbsp;? Les arbitrages invisibles.</p>
+                </div>
+                
+                <div class="angle-card">
+                    <div class="angle-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                        </svg>
+                    </div>
+                    <h3>Santé&nbsp;: 43 500 Lits Fermés</h3>
+                    <p>Pendant que 66 milliards partent aux créanciers, les urgences s'effondrent.</p>
+                </div>
+                
+                <div class="angle-card">
+                    <div class="angle-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 6v6l4 2"/>
+                        </svg>
+                    </div>
+                    <h3>Générations&nbsp;: Léa Paiera Toute Sa Vie</h3>
+                    <p>Née en 2017, elle hérite déjà de 1 198 milliards. Le transfert temporel décrypté.</p>
+                </div>
+                
+                <div class="angle-card">
+                    <div class="angle-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                        </svg>
+                    </div>
+                    <h3>Europe&nbsp;: Les Règles Qui Commandent</h3>
+                    <p>Maastricht, pacte budgétaire&nbsp;: comment les traités ont verrouillé les choix.</p>
+                </div>
+                
+                <div class="angle-card">
+                    <div class="angle-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/>
+                        </svg>
+                    </div>
+                    <h3>Alternatives&nbsp;: La Preuve par la Norvège</h3>
+                    <p>Un pays a fait d'autres choix. Un autre modèle est-il possible&nbsp;?</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Questions d'interview -->
+        <section id="questions">
+            <h2 class="section-title">Questions pour interviewer l'auteur</h2>
+            
+            <div class="questions-list">
+                <div class="question-item">
+                    <div class="question-number">1</div>
+                    <div class="question-content">
+                        <h4>«&nbsp;66 milliards d'intérêts par an&nbsp;: qui reçoit cet argent exactement&nbsp;?&nbsp;»</h4>
+                        <p class="question-hint">→ Pour identifier les créanciers invisibles</p>
+                    </div>
+                </div>
+                
+                <div class="question-item">
+                    <div class="question-number">2</div>
+                    <div class="question-content">
+                        <h4>«&nbsp;Vous dites que la dette n'est pas un problème technique mais politique. Qu'entendez-vous&nbsp;?&nbsp;»</h4>
+                        <p class="question-hint">→ Pour dévoiler les arbitrages cachés</p>
+                    </div>
+                </div>
+                
+                <div class="question-item">
+                    <div class="question-number">3</div>
+                    <div class="question-content">
+                        <h4>«&nbsp;L'anthropie&nbsp;: qu'est-ce que c'est et pourquoi ce concept change-t-il notre regard&nbsp;?&nbsp;»</h4>
+                        <p class="question-hint">→ Pour expliquer la grille d'analyse</p>
+                    </div>
+                </div>
+                
+                <div class="question-item">
+                    <div class="question-number">4</div>
+                    <div class="question-content">
+                        <h4>«&nbsp;Vous décrivez quatre scénarios pour 2025-2035. Lequel vous semble le plus probable&nbsp;?&nbsp;»</h4>
+                        <p class="question-hint">→ Pour ouvrir sur les futurs possibles</p>
+                    </div>
+                </div>
+                
+                <div class="question-item">
+                    <div class="question-number">5</div>
+                    <div class="question-content">
+                        <h4>«&nbsp;Que peut faire un citoyen face à cette mécanique&nbsp;?&nbsp;»</h4>
+                        <p class="question-hint">→ Pour conclure sur l'action démocratique</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Infos pratiques -->
+        <section id="infos">
+            <h2 class="section-title">Informations pratiques</h2>
+            
+            <div class="two-col-grid">
+                <div class="card">
+                    <h3>Fiche technique</h3>
+                    <ul>
+                        <li><strong>Titre&nbsp;:</strong> Dette Publique&nbsp;: Qui paie vraiment&nbsp;?</li>
+                        <li><strong>Sous-titre&nbsp;:</strong> Budget, démocratie, avenir&nbsp;: qui décide&nbsp;?</li>
+                        <li><strong>Auteur&nbsp;:</strong> Stéphane LALUT</li>
+                        <li><strong>Série&nbsp;:</strong> L'odyssée des idées (ANTHROPIE 01)</li>
+                        <li><strong>ISBN&nbsp;:</strong> 978-2-9586347-3-5</li>
+                        <li><strong>Pagination&nbsp;:</strong> 222 pages</li>
+                        <li><strong>Format&nbsp;:</strong> 15,24 × 22,86 cm</li>
+                        <li><strong>Parution&nbsp;:</strong> 17 octobre 2025</li>
+                        <li><strong>Éditeur&nbsp;:</strong> Autoédition</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h3>Disponibilité & tarifs</h3>
+                    <ul>
+                        <li><strong>Broché&nbsp;:</strong> 19,00 €</li>
+                        <li><strong>Kindle&nbsp;:</strong> 9,99 € (ou abonnement Kindle Unlimited)</li>
+                        <li><strong>Distributeur&nbsp;:</strong> Amazon</li>
+                        <li><strong>Disponibilité&nbsp;:</strong> En stock</li>
+                        <li><strong>Livraison&nbsp;:</strong> Gratuite dès 35 € d'achat</li>
+                    </ul>
+                    <div class="action-buttons" style="margin-top: 30px;">
+                        <a href="https://amzn.eu/d/7gtH9No" class="btn btn-primary" target="_blank">Commander sur Amazon</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- L'auteur -->
+        <section id="auteur">
+            <h2 class="section-title">À propos de l'auteur</h2>
+            
+            <div class="card">
+                <h3>Stéphane LALUT</h3>
+                <p>Pourquoi les crises se répètent-elles&nbsp;? Pourquoi l'ordre ici engendre-t-il la dette ailleurs&nbsp;? Stéphane Lalut explore ces questions à travers ce qu'il nomme l'«&nbsp;archéologie conceptuelle&nbsp;»&nbsp;: une méthode qui fouille les mécanismes invisibles qui structurent notre monde.</p>
+                
+                <p>Également auteur de <em>ANTHROPIE – Ordre ici. Dette ailleurs</em> (600 pages, 168 entrées historiques sur 3,3 millions d'années), il défend une vision de la culture comme bien commun, reflétée dans un prix volontairement accessible (9,99&nbsp;€ en numérique). <em>Dette Publique</em> applique cette grille d'analyse au cas français contemporain&nbsp;: les chiffres que vous payez, les arbitrages que vous subissez, les choix qu'on ne vous a jamais proposés.</p>
+            </div>
+        </section>
+
+        <!-- Téléchargements -->
+        <section id="downloads">
+            <h2 class="section-title">Kit presse & téléchargements</h2>
+            
+            <div class="download-grid">
+                <a href="javascript:void(0);" onclick="generatePDF();" class="download-card" style="cursor: pointer;">
+                    <div class="icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                        </svg>
+                    </div>
+                    <h4>Dossier de presse PDF</h4>
+                    <p>Imprimer ou enregistrer en PDF cette page</p>
+                </a>
+                
+                <a href="Dette_publique-Couverture_KINDLE.jpg" download class="download-card">
+                    <div class="icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <circle cx="8.5" cy="8.5" r="1.5"/>
+                            <polyline points="21 15 16 10 5 21"/>
+                        </svg>
+                    </div>
+                    <h4>Couverture haute résolution</h4>
+                    <p>Format JPG - Haute qualité pour publication</p>
+                </a>
+                
+                <a href="https://amzn.eu/d/7gtH9No" target="_blank" class="download-card">
+                    <div class="icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                        </svg>
+                    </div>
+                    <h4>Fiche Amazon officielle</h4>
+                    <p>Page de vente et aperçu du livre</p>
+                </a>
+                
+                <a href="https://projectpulse-source.github.io/dette-publique-france/" target="_blank" class="download-card">
+                    <div class="icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M18 20V10"/>
+                            <path d="M12 20V4"/>
+                            <path d="M6 20v-6"/>
+                        </svg>
+                    </div>
+                    <h4>Extension numérique</h4>
+                    <p>Tableau de bord en temps réel (QR code dans le livre)</p>
+                </a>
+                
+                <a href="https://projectpulse-source.github.io/anthropie/press.html" target="_blank" class="download-card">
+                    <div class="icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                        </svg>
+                    </div>
+                    <h4>Kit presse ANTHROPIE</h4>
+                    <p>L'ouvrage de référence — 600 pages</p>
+                </a>
+            </div>
+            
+            <div class="service-presse-box">
+                <h3>Exemplaire service presse</h3>
+                <p>Un exemplaire complet (format Kindle) est disponible sur demande pour les journalistes.</p>
+                <p><strong>Procédure&nbsp;:</strong> Contactez <a href="mailto:stephane---l@outlook.fr">stephane---l@outlook.fr</a> avec le nom de votre média. Vous recevrez un lien de téléchargement Kindle dans les 24h.</p>
+                <div class="action-buttons" style="margin-top: 20px;">
+                    <a href="mailto:stephane---l@outlook.fr?subject=Demande%20exemplaire%20service%20presse%20-%20Dette%20Publique&body=Bonjour%2C%0A%0AJe%20souhaite%20recevoir%20un%20exemplaire%20service%20presse%20de%20Dette%20Publique.%0A%0AM%C3%A9dia%20%3A%20%0A%0ACordialement" class="btn btn-primary">Demander un exemplaire</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section id="contact">
+            <h2 class="section-title">Contact presse</h2>
+            
+            <div class="contact-box">
+                <h3>Pour toute demande d'interview, d'exemplaire service presse ou d'information complémentaire</h3>
+                
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="icon">✉️</div>
+                        <a href="/cdn-cgi/l/email-protection#1d6e69786d757c7378303030715d72686971727276337b6f" style="color: #b91c1c; text-decoration: underline;"><span class="__cf_email__" data-cfemail="1a696e7f6a727b747f373737765a756f6e76757571347c68">[email&#160;protected]</span></a>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="icon">🌐</div>
+                        <a href="https://amzn.eu/d/7gtH9No" target="_blank">Fiche Amazon</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to action final -->
+        <section style="text-align: center;">
+            <h2 class="section-title">Découvrir Dette Publique</h2>
+            <div class="action-buttons">
+                <a href="https://amzn.eu/d/7gtH9No" class="btn btn-primary" target="_blank">Commander le livre</a>
+                <a href="https://projectpulse-source.github.io/anthropie/press.html" class="btn btn-secondary" target="_blank">Kit presse ANTHROPIE</a>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p>Dette Publique – Qui paie vraiment&nbsp;? © 2025 Stéphane LALUT</p>
+            <p style="margin-top: 15px; font-size: 0.9em;">Dossier de presse mis à jour le 25 novembre 2025</p>
+        </footer>
+    </div>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // Fonctions de partage
+        function shareOnTwitter() {
+            var url = window.location.href;
+            var text = "Dossier de presse - Dette Publique : Qui paie vraiment ? par Stéphane LALUT";
+            window.open('https://twitter.com/intent/tweet?url=' + encodeURIComponent(url) + '&text=' + encodeURIComponent(text), '_blank');
+            return false;
+        }
+        
+        function shareOnFacebook() {
+            var url = window.location.href;
+            window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url), '_blank');
+            return false;
+        }
+        
+        function shareOnLinkedIn() {
+            var url = window.location.href;
+            window.open('https://www.linkedin.com/sharing/share-offsite/?url=' 
