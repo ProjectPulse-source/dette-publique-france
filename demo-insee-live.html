@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Démo · INSEE Live · Dette publique française</title>
+<style>
+  :root {
+    --noir: #111;
+    --gris-fonce: #444;
+    --gris-moyen: #888;
+    --gris-clair: #e8e8e3;
+    --beige: #f5f5f0;
+    --blanc: #fff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    background: var(--blanc);
+    color: var(--noir);
+    margin: 0;
+    padding: 2rem 1rem;
+    line-height: 1.5;
+  }
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  header {
+    border-bottom: 1px solid var(--gris-clair);
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  h1 {
+    font-size: 1.6rem;
+    font-weight: normal;
+    margin: 0 0 .3rem;
+    letter-spacing: -0.01em;
+  }
+  .subtitle {
+    color: var(--gris-fonce);
+    font-style: italic;
+    font-size: 0.95rem;
+  }
+  .source-badge {
+    display: inline-block;
+    margin-top: .8rem;
+    padding: .25rem .7rem;
+    font-family: -apple-system, system-ui, sans-serif;
+    font-size: .75rem;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    border: 1px solid var(--gris-clair);
+    background: var(--beige);
+    color: var(--gris-fonce);
+  }
+  .source-badge.live { background: #e6f4e6; border-color: #4a8a4a; color: #2a5a2a; }
+  .source-badge.cache { background: #fff5e6; border-color: #c89a3a; color: #7a5a1a; }
+  .source-badge.fallback { background: #fde6e6; border-color: #c84a3a; color: #7a2a1a; }
+
+  /* Grille des compteurs principaux */
+  .compteurs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+  .compteur {
+    background: var(--blanc);
+    border: 1px solid var(--gris-clair);
+    border-top: 3px solid var(--noir);
+    padding: 1.2rem 1rem;
+  }
+  .compteur .label {
+    font-family: -apple-system, system-ui, sans-serif;
+    font-size: .7rem;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    color: var(--gris-moyen);
+    margin-bottom: .4rem;
+  }
+  .compteur .value {
+    font-size: 2rem;
+    font-weight: normal;
+    color: var(--noir);
+    margin-bottom: .15rem;
+  }
+  .compteur .value .unit {
+    font-size: 1rem;
+    color: var(--gris-fonce);
+    margin-left: .15rem;
+  }
+  .compteur .meta {
+    font-size: .75rem;
+    color: var(--gris-fonce);
+    font-style: italic;
+  }
+
+  /* Sous-secteurs APU */
+  h2 {
+    font-size: 1.2rem;
+    font-weight: normal;
+    margin: 2rem 0 1rem;
+    padding-bottom: .4rem;
+    border-bottom: 1px solid var(--gris-clair);
+  }
+  .repartition {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--gris-clair);
+  }
+  .repartition .item {
+    padding: .9rem 1rem;
+    border-right: 1px solid var(--gris-clair);
+  }
+  .repartition .item:last-child { border-right: none; }
+  .repartition .item .nom {
+    font-size: .8rem;
+    color: var(--gris-fonce);
+    margin-bottom: .3rem;
+  }
+  .repartition .item .montant {
+    font-size: 1.4rem;
+  }
+  .repartition .item .pct {
+    font-size: .75rem;
+    color: var(--gris-moyen);
+    margin-top: .2rem;
+  }
+
+  /* Tableau historique */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .9rem;
+    margin-bottom: 1.5rem;
+  }
+  th {
+    text-align: left;
+    padding: .5rem .8rem;
+    border-bottom: 2px solid var(--noir);
+    font-family: -apple-system, system-ui, sans-serif;
+    font-size: .75rem;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    font-weight: normal;
+    color: var(--gris-fonce);
+  }
+  td {
+    padding: .45rem .8rem;
+    border-bottom: 1px solid var(--gris-clair);
+  }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+
+  .actions {
+    margin: 2rem 0 1rem;
+    display: flex;
+    gap: .8rem;
+    flex-wrap: wrap;
+  }
+  button {
+    background: var(--noir);
+    color: var(--blanc);
+    border: none;
+    padding: .6rem 1.2rem;
+    font-family: -apple-system, system-ui, sans-serif;
+    font-size: .85rem;
+    cursor: pointer;
+    letter-spacing: .03em;
+  }
+  button.secondary {
+    background: var(--blanc);
+    color: var(--noir);
+    border: 1px solid var(--noir);
+  }
+  button:hover { opacity: .85; }
+
+  .console {
+    background: #1a1a1a;
+    color: #c0e0c0;
+    font-family: 'Menlo', 'Monaco', monospace;
+    font-size: .8rem;
+    padding: 1rem;
+    border-radius: 2px;
+    white-space: pre-wrap;
+    max-height: 250px;
+    overflow-y: auto;
+    margin-top: 1rem;
+  }
+  .loading { color: var(--gris-moyen); font-style: italic; }
+  .error { color: #c84a3a; }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <header>
+    <h1>Dette publique française — démonstration INSEE Live</h1>
+    <div class="subtitle">Vérification du module <code>insee-live.js</code> avant déploiement</div>
+    <div id="source-badge" class="source-badge">Chargement…</div>
+  </header>
+
+  <h2>Compteurs principaux</h2>
+  <div class="compteurs" id="compteurs">
+    <div class="compteur">
+      <div class="label">Dette publique APU</div>
+      <div class="value loading" data-field="detteAPU">—</div>
+      <div class="meta">Maastricht — fin de trimestre</div>
+    </div>
+    <div class="compteur">
+      <div class="label">Ratio dette / PIB</div>
+      <div class="value loading" data-field="ratioPIB">—</div>
+      <div class="meta">Cible Maastricht : 60 %</div>
+    </div>
+    <div class="compteur">
+      <div class="label">Dette par habitant</div>
+      <div class="value loading" data-field="detteParHabitant">—</div>
+      <div class="meta">Indicateur pédagogique</div>
+    </div>
+    <div class="compteur">
+      <div class="label">Dette nette APU</div>
+      <div class="value loading" data-field="detteNette">—</div>
+      <div class="meta">Hors trésorerie publique</div>
+    </div>
+  </div>
+
+  <h2>Répartition par sous-secteur</h2>
+  <div class="repartition" id="repartition">
+    <div class="item"><div class="nom">État</div><div class="montant" data-field="contribEtat">—</div><div class="pct" data-pct="contribEtat">—</div></div>
+    <div class="item"><div class="nom">Sécurité sociale (ASSO)</div><div class="montant" data-field="contribASSO">—</div><div class="pct" data-pct="contribASSO">—</div></div>
+    <div class="item"><div class="nom">Collectivités (APUL)</div><div class="montant" data-field="contribAPUL">—</div><div class="pct" data-pct="contribAPUL">—</div></div>
+    <div class="item"><div class="nom">Org. div. (ODAC)</div><div class="montant" data-field="contribODAC">—</div><div class="pct" data-pct="contribODAC">—</div></div>
+  </div>
+
+  <h2>Historique trimestriel — dette APU et ratio PIB</h2>
+  <table id="histo">
+    <thead>
+      <tr><th>Trimestre</th><th class="num">Dette APU (Md€)</th><th class="num">Ratio PIB (%)</th><th class="num">Δ trimestre</th></tr>
+    </thead>
+    <tbody id="histo-body">
+      <tr><td colspan="4" class="loading">Chargement…</td></tr>
+    </tbody>
+  </table>
+
+  <div class="actions">
+    <button onclick="charger(true)">↻ Forcer le rafraîchissement (bypass cache)</button>
+    <button class="secondary" onclick="vider_cache()">Vider le cache localStorage</button>
+    <button class="secondary" onclick="afficher_brut()">Afficher le payload brut</button>
+  </div>
+
+  <div class="console" id="console"></div>
+
+</div>
+
+<script src="insee-live.js"></script>
+<script>
+  const consoleEl = document.getElementById('console');
+  function log(msg, cls='') {
+    const time = new Date().toLocaleTimeString('fr-FR');
+    consoleEl.innerHTML += `<span class="${cls}">[${time}] ${msg}</span>\n`;
+    consoleEl.scrollTop = consoleEl.scrollHeight;
+  }
+
+  let dernierPayload = null;
+
+  async function charger(forceRefresh = false) {
+    log(forceRefresh ? '→ Rafraîchissement forcé…' : '→ Chargement (cache si dispo)…');
+    try {
+      const data = await INSEELive.fetchAll({ forceRefresh });
+      dernierPayload = data;
+      afficher(data);
+      log(`✓ Source : ${data.source} — période ${data.period} — ${Object.keys(data.history).length} séries chargées`);
+    } catch (e) {
+      log('✗ ' + e.message, 'error');
+      document.getElementById('source-badge').textContent = 'Erreur';
+      document.getElementById('source-badge').className = 'source-badge fallback';
+    }
+  }
+
+  function afficher(data) {
+    const { latest, history, source, period } = data;
+    const f = INSEELive.formatFR;
+
+    // Badge source
+    const badge = document.getElementById('source-badge');
+    if (source === 'insee-live') {
+      badge.textContent = `Données live INSEE · ${INSEELive.formatPeriod(period)}`;
+      badge.className = 'source-badge live';
+    } else if (source === 'cache') {
+      badge.textContent = `Cache local (< 1 h) · ${INSEELive.formatPeriod(period)}`;
+      badge.className = 'source-badge cache';
+    } else {
+      badge.textContent = `Fallback JSON statique · ${INSEELive.formatPeriod(period)}`;
+      badge.className = 'source-badge fallback';
+    }
+
+    // Compteurs principaux
+    setField('detteAPU', f(latest.detteAPU, 1), 'Md€');
+    setField('ratioPIB', f(latest.ratioPIB, 1), '%');
+    setField('detteParHabitant', latest.detteParHabitant?.toLocaleString('fr-FR'), '€');
+    setField('detteNette', f(latest.detteNette, 1), 'Md€');
+
+    // Répartition sous-secteurs
+    const total = (latest.contribEtat || 0) + (latest.contribASSO || 0)
+                + (latest.contribAPUL || 0) + (latest.contribODAC || 0);
+    ['contribEtat','contribASSO','contribAPUL','contribODAC'].forEach(k => {
+      setField(k, f(latest[k], 1), 'Md€');
+      const pct = ((latest[k] || 0) / total * 100).toFixed(1);
+      const el = document.querySelector(`[data-pct="${k}"]`);
+      if (el) el.textContent = `${pct} %`;
+    });
+
+    // Historique
+    const histo = history.detteAPU || [];
+    const ratio = history.ratioPIB || [];
+    const tbody = document.getElementById('histo-body');
+    tbody.innerHTML = '';
+    const slice = histo.slice(-12).reverse(); // 12 derniers trimestres, plus récent en haut
+    slice.forEach((obs, i) => {
+      const ratioObs = ratio.find(r => r.period === obs.period);
+      const prev = histo[histo.indexOf(obs) - 1];
+      const delta = prev ? (obs.value - prev.value) : null;
+      const deltaStr = delta === null ? '—'
+        : (delta >= 0 ? '+' : '') + f(delta, 1) + ' Md€';
+      tbody.innerHTML += `
+        <tr>
+          <td>${INSEELive.formatPeriod(obs.period)}</td>
+          <td class="num">${f(obs.value, 1)}</td>
+          <td class="num">${ratioObs ? f(ratioObs.value, 1) : '—'}</td>
+          <td class="num" style="color:${delta > 0 ? '#c84a3a' : '#2a5a2a'}">${deltaStr}</td>
+        </tr>`;
+    });
+  }
+
+  function setField(name, value, unit) {
+    const el = document.querySelector(`[data-field="${name}"]`);
+    if (!el) return;
+    el.classList.remove('loading');
+    el.innerHTML = value === undefined || value === '—' ? '—'
+      : `${value}${unit ? ` <span class="unit">${unit}</span>` : ''}`;
+  }
+
+  function vider_cache() {
+    localStorage.removeItem('insee_dette_apu_v1');
+    log('✓ Cache localStorage vidé');
+  }
+
+  function afficher_brut() {
+    if (!dernierPayload) { log('Aucune donnée chargée', 'error'); return; }
+    log('--- PAYLOAD BRUT ---\n' + JSON.stringify(dernierPayload, null, 2));
+  }
+
+  // Chargement initial
+  charger();
+</script>
+
+</body>
+</html>
