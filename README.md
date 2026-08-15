@@ -1,4 +1,4 @@
-# 📊 Dette Publique France - Visualisation en Temps Réel
+# 📊 Dette Publique France - Compteur et donnees officielles INSEE
 
 Site web interactif affichant l'évolution de la dette publique française basé sur les données officielles de l'**INSEE**, avec présentation de deux livres sur l'économie et la dette.
 
@@ -13,19 +13,19 @@ Site web interactif affichant l'évolution de la dette publique française basé
 - 🥧 **Camembert détenteurs** : Qui détient la dette publique ?
 - 📊 **Graphique du solde primaire** : Évolution sur 5 ans
 - 📖 **Deux sections livres** avec préfaces complètes :
-  - Dette Souveraine - Qui paie vraiment
+  - Dette Publique : Qui paie vraiment ?
   - ANTHROPIE - Ordre ici. Dette ailleurs
 - 📱 **Partage social intégré** : Twitter, Facebook, LinkedIn
 - 💡 **Tooltips explicatifs** sur le solde primaire
 - 📱 **Design responsive** compatible mobile/tablette/desktop
-- 🔄 **Mise à jour automatique** des données via l'API INSEE
+- 🔄 **Donnees INSEE** : fetch live (insee-live.js, series 010777616/010777608) + repli Data/dette_data.json, regenere par le pipeline du site auteur (scripts/update_dette_insee.py --legacy) -- ce depot n'a plus de pipeline propre
 - 🎨 **Interface moderne** et minimaliste
 
 ## 🖼️ Configuration des images de couverture
 
 Pour afficher les couvertures des livres :
 
-### Livre 1 : Dette Souveraine
+### Livre 1 : Dette Publique : Qui paie vraiment ?
 - **Nom du fichier** : `image_couverture.PNG` (ou `.jpg`)
 - **Emplacement** : À la racine du projet
 
@@ -96,7 +96,7 @@ dette-publique-france/
 ├── data/
 │   └── dette_data.json    # Données de la dette (généré automatiquement)
 ├── requirements.txt       # Dépendances Python
-├── image_couverture.PNG  # Couverture du livre Dette Souveraine (optionnel)
+├── image_couverture.PNG  # Couverture du livre Dette Publique : Qui paie vraiment ? (optionnel)
 ├── image_anthropie.jpg   # Couverture du livre ANTHROPIE (optionnel)
 └── README.md             # Documentation
 ```
@@ -165,7 +165,7 @@ jobs:
 
 ## 📚 Livres Présentés
 
-### Dette Souveraine - Qui paie vraiment
+### Dette Publique : Qui paie vraiment ?
 Analyse documentée des mécanismes de la dette publique française, avec données actualisées 2024-2025, sources officielles (INSEE, OCDE, Banque de France), et explications sans jargon.
 
 ### ANTHROPIE - Ordre ici. Dette ailleurs
