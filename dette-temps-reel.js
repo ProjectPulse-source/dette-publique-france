@@ -3,26 +3,22 @@
 
 class DetteTempReel {
     constructor() {
-        // Données de base (dernière mise à jour INSEE)
+        // Ancre de repli : derniere publication INSEE connue AU MOMENT DU BUILD.
+        // Ecrasee au chargement par Data/dette_data.json (regenere par le
+        // pipeline du site auteur, scripts/update_dette_insee.py --legacy).
+        // L'affichage anime est une EXTRAPOLATION depuis cette ancre, pas une
+        // donnee temps reel : l'INSEE publie trimestriellement (~90 j de latence).
         this.donneesBase = {
-            montant: 3416.3,  // Milliards d'euros (T2 2025)
-            date: '2025-06-30',  // Date de référence
-            tauxAnnuel: 3.5,  // Taux d'augmentation annuel moyen (%)
-            population: 67000000  // Population française
+            montant: 3536.1,  // Milliards d'euros (T1 2026, INSEE 010777616)
+            date: '2026-03-31',  // Fin du dernier trimestre publie
+            // Variation observee sur les 4 derniers trimestres INSEE
+            // (T1 2025 -> T1 2026 : 3 345,4 -> 3 536,1 Md EUR, +5,7 %)
+            tauxAnnuel: 5.7,
+            population: 68500000  // Estimation INSEE ~68,5 M (bilan demographique)
         };
-        
+
         // Calcul de la vitesse d'augmentation
         this.vitesseParSeconde = this.calculerVitesseParSeconde();
-        
-        // Configuration de l'API INSEE (pour mise à jour automatique future)
-        this.configAPI = {
-            url: 'https://api.insee.fr/series/BDM/data/SERIES_BDM/001694056',
-            // Note: nécessite une clé API INSEE
-            headers: {
-                'Accept': 'application/json',
-                'X-INSEE-Api-Key': 'VOTRE_CLE_API_INSEE' // À obtenir sur api.insee.fr
-            }
-        };
     }
     
     calculerVitesseParSeconde() {
@@ -62,37 +58,21 @@ class DetteTempReel {
         };
     }
     
-    // Mise à jour depuis l'API INSEE (nécessite une clé API)
-    async mettreAJourDepuisINSEE() {
-        try {
-            const response = await fetch(this.configAPI.url, {
-                headers: this.configAPI.headers
-            });
-            
-            if (!response.ok) {
-                throw new Error('Erreur API INSEE');
-            }
-            
-            const data = await response.json();
-            // Traitement des données INSEE
-            // Structure spécifique à adapter selon la réponse de l'API
-            
-            return data;
-        } catch (error) {
-            console.error('Erreur lors de la récupération des données INSEE:', error);
-            return null;
-        }
-    }
-    
-    // Alternative : chargement depuis un fichier JSON hébergé
+    // Recale l'ancre depuis Data/dette_data.json (format du projet :
+    // { last_update, data: [{ period: "2026-Q1", dette_montant: 3536.1 }, …] },
+    // régénéré par le pipeline du site auteur — le compteur n'a plus de
+    // pipeline propre). Échec = on garde l'ancre du build, déjà datée.
     async chargerDonneesJSON(url) {
         try {
-            const response = await fetch(url);
+            const response = await fetch(url, { cache: 'no-cache' });
             const data = await response.json();
-            
-            if (data.derniereMiseAJour && data.dette) {
-                this.donneesBase.montant = data.dette;
-                this.donneesBase.date = data.derniereMiseAJour;
+            const serie = Array.isArray(data.data) ? data.data : [];
+            const dernier = serie[serie.length - 1];
+            if (dernier && dernier.period && dernier.dette_montant) {
+                const [annee, trimestre] = dernier.period.split('-Q');
+                const finTrimestre = new Date(Number(annee), Number(trimestre) * 3, 0);
+                this.donneesBase.montant = dernier.dette_montant;
+                this.donneesBase.date = finTrimestre.toISOString().slice(0, 10);
                 this.vitesseParSeconde = this.calculerVitesseParSeconde();
                 return true;
             }
@@ -157,9 +137,9 @@ function initialiserDetteTempsReel() {
             dette.formaterNombre(stats.augmentationJour / 1000000, 2) + ' M€/jour';
     }
     
-    // Tentative de mise à jour depuis un fichier JSON externe
-    // (hébergé sur votre serveur et mis à jour régulièrement)
-    dette.chargerDonneesJSON('/data/dette_insee_latest.json')
+    // Recalage de l'ancre depuis le JSON du dépôt (⚠ GitHub Pages est
+    // sensible à la casse : le dossier est Data/, pas data/)
+    dette.chargerDonneesJSON('Data/dette_data.json')
         .then(success => {
             if (success) {
                 console.log('Données mises à jour depuis le serveur');
