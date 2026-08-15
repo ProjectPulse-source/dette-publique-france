@@ -1,4 +1,21 @@
-# 📊 Dette Publique France - Compteur et donnees officielles INSEE
+# Dette Publique France — REDIRECTION
+
+**Depuis le 2026-08-15, ce site est une redirection** vers
+https://stephane-lalut.com/cout-de-la-dette-publique/ — la page du site auteur
+qui porte le compteur, les chiffres officiels actualises automatiquement
+(pipeline INSEE/Eurostat avec gardes de validation) et l'analyse complete.
+
+**L'URL de ce depot reste vivante A VIE** : elle est la cible du QR code
+imprime dans l'EPUB du livre « Dette Publique : Qui paie vraiment ? »
+(exemplaires vendus, en circulation). Ne jamais renommer ni supprimer ce
+depot ou ce compte.
+
+Le contenu historique du site (visualisations, JS, donnees) reste dans
+l'historique git et dans les fichiers non references ci-dessous.
+
+---
+
+# (historique) 📊 Dette Publique France - Compteur et donnees officielles INSEE
 
 Site web interactif affichant l'évolution de la dette publique française basé sur les données officielles de l'**INSEE**, avec présentation de deux livres sur l'économie et la dette.
 
